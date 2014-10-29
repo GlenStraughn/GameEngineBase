@@ -27,3 +27,27 @@ void Script::setSceneNode(SceneNode &sNode)
 {
     node = &sNode;
 }
+
+
+void Script::setFloatValue(string variableName, float value)
+{
+    
+}
+
+
+void Script::setFloatArray(string variableName, float array[])
+{
+    
+}
+
+
+void Script::setStringValue(string variableName, string value)
+{
+    
+}
+
+
+void Script::setStringArray(string variableName, string array[])
+{
+    
+}

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "SceneNode.h"
+#include <map>
 
 class SceneNode;
 
@@ -19,9 +20,14 @@ public:
     bool isActive();
     void toggleActive();
     void setSceneNode(SceneNode &sNode);
+    virtual void setFloatValue(string variableName, float value);
+    virtual void setFloatArray(string variableName, float array[]);
+    virtual void setStringValue(string variableName, string value);
+    virtual void setStringArray(string variableName, string array[]);
     
 protected:
     unsigned int cycles;
     bool active;
     SceneNode* node;
+    
 };
