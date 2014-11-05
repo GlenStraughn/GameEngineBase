@@ -16,6 +16,8 @@ class SceneNode;
 class Script
 {
 public:
+    Script();
+    
     virtual void run();
     bool isActive();
     void toggleActive();

@@ -12,12 +12,16 @@
 
 void OrbitScript::run()
 {
+    const float PI = 3.1415926535;
     cycles++;
     
-    float theta = (cycles/100)*rotationSpeed;
+    float theta = (float(cycles)/100)*rotationSpeed;
     
     float x = cos(theta);
     float z = sin(theta);
+    Transform* t = node->getParent()->getTransform();
+    float parentX = t->translation.x;
+    float parentZ = t->translation.z;
     
     glm::vec3 newTranslation(x, 0, z);
     

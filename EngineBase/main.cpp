@@ -437,7 +437,7 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
 		}
         else if(token == "script")
         {
-            loadScript(F, scene, node);
+            loadScript(F, scene, *newNode);
         }
     }
     
@@ -519,8 +519,7 @@ void update(void)
 	if (gMeshInstance.diffuseColor[1] > 1.0f) gMeshInstance.diffuseColor[1] = 0.25f;
 	if (gMeshInstance.diffuseColor[2] > 1.0f) gMeshInstance.diffuseColor[2] = 0.25f;
 	*/
-    
-    
+    gScene.runNodeScripts();
 }
 
 //-------------------------------------------------------------------------//

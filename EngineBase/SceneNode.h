@@ -21,6 +21,7 @@ public:
     ~SceneNode();
     
     void setParent(SceneNode &newParent);
+    SceneNode* getParent(){ return parent; }
     
     void addChild(SceneNode* newChild);
     
@@ -35,6 +36,7 @@ public:
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
+    Transform* getTransform() { return &T; }
     
 protected:
     vector<SceneNode*> children;

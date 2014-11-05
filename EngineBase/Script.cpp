@@ -8,6 +8,12 @@
 
 #include "Script.h"
 
+Script::Script()
+{
+    active = true;
+    cycles = 0;
+}
+
 void Script::run()
 {
     cycles++;
