@@ -73,6 +73,11 @@ public:
         
         root.draw(*cameras[currentCamera], I);
 	}
+    
+    void runNodeScripts()
+    {
+        root.runScript();
+    }
 };
 
 #endif

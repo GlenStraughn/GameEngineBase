@@ -23,9 +23,9 @@ void Script::toggleActive()
     active = !active;
 }
 
-void Script::setSceneNode(SceneNode &sNode)
+void Script::setSceneNode(SceneNode *sNode)
 {
-    node = &sNode;
+    node = sNode;
 }
 
 

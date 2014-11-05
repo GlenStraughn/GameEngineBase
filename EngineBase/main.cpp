@@ -7,6 +7,7 @@
 
 #include "EngineUtil.h"
 #include "Scene.h"
+#include "generateScript.h"
 
 //-------------------------------------------------------------------------//
 // Callback for Keyboard Input
@@ -319,6 +320,92 @@ void loadLight(FILE *F, Scene *scene)
 }
 
 
+void loadScript(FILE* F, Scene* scene, SceneNode &node)
+{
+    Script* newScript = NULL;
+    string token;
+    while (getToken(F, token, ONE_TOKENS))
+    {
+		if (token == "}")
+        {
+            break;
+        }
+        else if(token == "name" || token == "type" || token == "scriptType")
+        {
+            string scriptName;
+            getToken(F, scriptName, ONE_TOKENS);
+            
+            newScript = generateScript(scriptName);
+            node.addScript(*newScript);
+        }
+        else if(token == "float")
+        {
+            string variableName;
+            float newFloat;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &newFloat, 1);
+            
+            if(newScript != NULL)
+            {
+                newScript->setFloatValue(variableName, newFloat);
+            }
+        }
+        else if(token == "floatArray")
+        {
+            string variableName;
+            float* newArray;
+            float size;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &size, 1);
+            
+            newArray = new float[int(size)];
+            getFloats(F, newArray, int(size));
+            
+            if(newScript != NULL)
+            {
+                newScript->setFloatArray(variableName, newArray);
+            }
+        }
+        else if(token == "string")
+        {
+            string variableName, newString;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getToken(F, newString, ONE_TOKENS);
+            
+            if(newScript != NULL)
+            {
+                newScript->setStringValue(variableName, newString);
+            }
+        }
+        else if(token == "stringArray")
+        {
+            string variableName, *newArray;
+            float size;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &size, 1);
+            
+            newArray = new string[int(size)];
+            
+            for(int i = 0; i < size; i++)
+            {
+                getToken(F, newArray[i], ONE_TOKENS);
+            }
+            
+            
+            if(newScript != NULL)
+            {
+                newScript->setStringArray(variableName, newArray);
+            }
+        }
+        
+    }
+}
+
+
 void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
 {
     cout << "loading scene node" << endl;
@@ -348,6 +435,10 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
 			getFloats(F, &s[0], 3);
 			newNode->setScale(s);
 		}
+        else if(token == "script")
+        {
+            loadScript(F, scene, node);
+        }
     }
     
     node.addChild(newNode);
@@ -428,6 +519,8 @@ void update(void)
 	if (gMeshInstance.diffuseColor[1] > 1.0f) gMeshInstance.diffuseColor[1] = 0.25f;
 	if (gMeshInstance.diffuseColor[2] > 1.0f) gMeshInstance.diffuseColor[2] = 0.25f;
 	*/
+    
+    
 }
 
 //-------------------------------------------------------------------------//

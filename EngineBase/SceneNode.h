@@ -30,6 +30,8 @@ public:
     
     void draw(Camera &camera, Transform &trans);
     
+    void runScript();
+    
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }

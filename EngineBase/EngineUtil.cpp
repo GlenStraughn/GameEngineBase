@@ -732,7 +732,7 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
         case POINT_SPRITE:
         {
             glm::vec3 Q;
-            Q = glm::normalize(camera.eye - t.translation);
+            Q = glm::normalize(camera.eye - camera.center);
             
             float theta = atan2(Q.x, Q.z);
             float phi = asin(Q.y);

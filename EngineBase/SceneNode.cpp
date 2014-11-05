@@ -55,6 +55,8 @@ void SceneNode::addScript(Script &newScript)
     }
     
     nodeScript = &newScript;
+    
+    nodeScript->setSceneNode(this);
 }
 
 
@@ -91,5 +93,19 @@ void SceneNode::draw(Camera &camera, Transform &trans)
     for(int i = 0; i < children.size(); i++)
     {
         children[i]->draw(camera, parentTrans);
+    }
+}
+
+
+void SceneNode::runScript()
+{
+    if(nodeScript != NULL && nodeScript->isActive())
+    {
+        nodeScript->run();
+    }
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        children[i]->runScript();
     }
 }
