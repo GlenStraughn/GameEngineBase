@@ -23,6 +23,7 @@ public:
 	// Object pools
 	map<string, TriMesh*> meshes;
 	map<string, RGBAImage*> textures;
+    map<string, SceneNode*> nodeList;
     
 	// Scene graph
     SceneNode root;
@@ -77,6 +78,19 @@ public:
     void runNodeScripts()
     {
         root.runScript();
+    }
+    
+    bool addNode(string &nodeName, SceneNode &node) // Returns true if added to list, false if can't add to list
+    {
+        if(nodeList.find(nodeName) == nodeList.end())
+        {
+            nodeList[nodeName] = &node;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 };
 

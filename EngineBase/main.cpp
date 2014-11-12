@@ -8,6 +8,7 @@
 #include "EngineUtil.h"
 #include "Scene.h"
 #include "generateScript.h"
+#include "Timer.hpp"
 
 //-------------------------------------------------------------------------//
 // Callback for Keyboard Input
@@ -559,30 +560,49 @@ int main(int numArgs, char **args)
 	// start time (used to time framerate)
 	double startTime = TIME();
     
+    Timer logicTimer;
+    logicTimer.setInterval(double(1.0)/double(100.0));
+    Timer renderTimer;
+    renderTimer.setInterval(double(1.0)/double(60.0));
+    
+    logicTimer.resetCycle();
+    renderTimer.resetCycle();
+    
 	// render loop
 	while (true) {
 		// update and render
-		update();
-		render();
-		glfwGetWindowSize(gWindow, &gWidth, &gHeight);
         
-		// handle input
-		glfwPollEvents();
-		if (glfwWindowShouldClose(gWindow) != 0) break;
-		keyboardCameraController(*gScene.cameras[gScene.currentCamera]);
+        if(logicTimer.hasCyclePassed())
+        {
+            update();
+            logicTimer.resetCycle();
+        }
+        
+        if(renderTimer.hasCyclePassed())
+        {
+            render();
+            glfwGetWindowSize(gWindow, &gWidth, &gHeight);
+        
+            // handle input
+            glfwPollEvents();
+            if (glfwWindowShouldClose(gWindow) != 0) break;
+            keyboardCameraController(*gScene.cameras[gScene.currentCamera]);
 
-		double xx, yy;
-		glfwGetCursorPos(gWindow, &xx, &yy);
-		printf("%1.3f %1.3f ", xx, yy);
+            double xx, yy;
+            glfwGetCursorPos(gWindow, &xx, &yy);
+            printf("%1.3f %1.3f ", xx, yy);
         
-		// print framerate
-		double endTime = TIME();
-		printf("\rFPS: %1.0f  ", 1.0/(endTime-startTime));
-		startTime = endTime;
+            // print framerate
+            double endTime = TIME();
+            printf("\rFPS: %1.0f  ", 1.0/(endTime-startTime));
+            startTime = endTime;
         
-		// swap buffers
-		//SLEEP(10); // sleep 1 millisecond to avoid busy waiting
-		glfwSwapBuffers(gWindow);
+            // swap buffers
+            //SLEEP(10); // sleep 1 millisecond to avoid busy waiting
+            glfwSwapBuffers(gWindow);
+            
+            renderTimer.resetCycle();
+        }
 	}
 
 	// Shut down sound engine
