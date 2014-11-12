@@ -411,6 +411,7 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
 {
     cout << "loading scene node" << endl;
     string token;
+    bool nodeAdded = false;
     
     SceneNode* newNode = new SceneNode();
     
@@ -419,26 +420,36 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
     while (getToken(F, token, ONE_TOKENS)) {
 		//cout << token << endl;
         if (token == "}") break;
-		else if (token == "meshInstance") {
-			loadMeshInstance(F, scene, *newNode);
-        }
-        else if (token == "node" || token == "sceneNode")
+        else if (token == "name" || token == "id" || token == "ID")
         {
-            loadSceneNode(F, scene, *newNode);  // Sub-node initialization
+            string name;
+            getToken(F, name, ONE_TOKENS);
+            
+            nodeAdded = scene->addNode(name, node);
         }
-        else if (token == "translate") {
-			glm::vec3 t;
-			getFloats(F, &t[0], 3);
-			newNode->setTranslation(t);
-		}
-		else if (token == "scale") {
-			glm::vec3 s;
-			getFloats(F, &s[0], 3);
-			newNode->setScale(s);
-		}
-        else if(token == "script")
+        else if(nodeAdded)
         {
-            loadScript(F, scene, *newNode);
+            if (token == "meshInstance") {
+                loadMeshInstance(F, scene, *newNode);
+            }
+            else if (token == "node" || token == "sceneNode")
+            {
+                loadSceneNode(F, scene, *newNode);  // Sub-node initialization
+            }
+            else if (token == "translate") {
+                glm::vec3 t;
+                getFloats(F, &t[0], 3);
+                newNode->setTranslation(t);
+            }
+            else if (token == "scale") {
+                glm::vec3 s;
+                getFloats(F, &s[0], 3);
+                newNode->setScale(s);
+            }
+            else if(token == "script")
+            {
+                loadScript(F, scene, *newNode);
+            }
         }
     }
     

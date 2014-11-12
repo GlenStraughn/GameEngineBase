@@ -63,14 +63,6 @@ void SceneNode::addScript(Script &newScript)
 
 void SceneNode::draw(Camera &camera, Transform &trans)
 {
-    if(parent == NULL)
-    {
-        cout << "Root node draw() call" << endl;
-    }
-    else
-    {
-        cout << "Sub node draw() call" << endl;
-    }
     
     T.refreshTransform();
     

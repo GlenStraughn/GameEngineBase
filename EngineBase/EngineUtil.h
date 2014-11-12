@@ -34,6 +34,7 @@ using namespace std;
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <GLUT/GLUT.h>
 
 // Sound (irrKlang)
 #include "../IrrKlangInclude/irrKlang.h"
@@ -346,5 +347,29 @@ void initLightBuffer(void);
 
 
 //-------------------------------------------------------------------------//
-// 
+// Text Output
 //-------------------------------------------------------------------------//
+/*
+void screenTextOut(int xCoord, int yCoord, glm::vec3 color, string text)
+{
+    glColor3f(color.r, color.g, color.b);
+    glRasterPos2f(xCoord, yCoord);
+    
+    for(int i = 0; i < text.length(); i++)
+    {
+        
+        glutBitmapTimesRoman24(text[i]);
+        //glutBitmapCharacter(&font, text[i]);
+    }
+}
+
+void screenTextOut(string text)
+{
+    glColor3f(1, 1, 1);
+    glRasterPos2f(5, 5);
+    
+    for(int i = 0; i < text.length(); i++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+    }
+}*/

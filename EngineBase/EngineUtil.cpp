@@ -700,7 +700,6 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             mat.bindMaterial(t, camera);
             if (triMesh != NULL)
             {
-                cout << "drawing mesh" << endl;
                 triMesh->draw();
             }
             else printf("Error! Null Mesh.");
@@ -722,7 +721,6 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             mat.bindMaterial(t, camera);
             if (triMesh != NULL)
             {
-                cout << "drawing billboard" << endl;
                 triMesh->draw();
             }
             else printf("Error! Null Mesh.");
@@ -750,7 +748,6 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             
             if(triMesh != NULL)
             {
-                cout << "drawing sprite" << endl;
                 triMesh->draw();
             }
             else
