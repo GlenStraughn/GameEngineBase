@@ -549,7 +549,7 @@ void Material::bindMaterial(Transform &T, Camera &camera)
 	if (loc != -1) glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(T.transform));
 	//
 	loc = glGetUniformLocation(shaderProgram, "uObjectWorldInverseM");
-    printMat(T.invTransform);
+    //printMat(T.invTransform);
 	if (loc != -1) glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(T.invTransform));
 	//
 	glm::mat4x4 objectWorldViewPerspect = camera.worldViewProject * T.transform;

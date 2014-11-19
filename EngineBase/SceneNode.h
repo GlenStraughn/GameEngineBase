@@ -33,6 +33,11 @@ public:
     
     void runScript();
     
+    void setName(string name){ nameID = name; }
+    string getName() {return nameID;}
+    
+    void removeChild(string name);
+    
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
@@ -41,6 +46,8 @@ public:
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;
+    
+    string nameID;
     
     Transform T;
     

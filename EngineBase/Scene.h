@@ -9,6 +9,8 @@
 #include "EngineUtil.h"
 #include "SceneNode.h"
 
+using namespace std;
+
 #ifndef EngineBase_Scene_h
 #define EngineBase_Scene_h
 
@@ -90,6 +92,22 @@ public:
         else
         {
             return false;
+        }
+    }
+    
+    
+    void removeNode(string nodeName)
+    {
+        map<string, SceneNode*>::iterator iter;
+        
+        iter = nodeList.find(nodeName);
+        
+        if(iter != nodeList.end())
+        {
+            root.removeChild(nodeName);
+            
+            delete nodeList[nodeName];
+            nodeList.erase(iter);
         }
     }
 };

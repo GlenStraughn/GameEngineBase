@@ -60,7 +60,6 @@ void SceneNode::addScript(Script &newScript)
 }
 
 
-
 void SceneNode::draw(Camera &camera, Transform &trans)
 {
     
@@ -100,4 +99,24 @@ void SceneNode::runScript()
     {
         children[i]->runScript();
     }
+}
+
+
+void SceneNode::removeChild(string name)
+{
+    for(int i = 0; i < children.size(); i++)
+    {
+        if(children[i]->getName() == name)
+        {
+            children.erase(children.begin() + i);
+            return;
+        }
+    }
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        children[i]->removeChild(name);
+    }
+    
+    return;
 }
