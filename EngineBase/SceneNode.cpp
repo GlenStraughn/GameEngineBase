@@ -120,3 +120,15 @@ void SceneNode::removeChild(string name)
     
     return;
 }
+
+
+vector<SceneNode*>* SceneNode::getChildren()
+{
+	return &children;
+}
+
+
+Script* SceneNode::getScript()
+{
+	return nodeScript;
+}

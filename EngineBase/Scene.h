@@ -20,7 +20,12 @@ public:
 	// Global properties
 	glm::vec3 backgroundColor;
 	string backgroundMusic;
-    int currentCamera = 0;
+    int currentCamera;
+
+	Scene()
+	{
+		currentCamera = 0;
+	}
     
 	// Object pools
 	map<string, TriMesh*> meshes;
@@ -67,12 +72,12 @@ public:
 		/*for (int i = 0; i < (int)meshInstances.size(); i++) {
 			meshInstances[i]->draw(*cameras[currentCamera]);
 		}*/
-        
+
         Transform I;
         I.transform = {1,0,0,0,
                        0,1,0,0,
                        0,0,1,0,
-                       0,0,0,1};
+					   0,0,0,1};
         
         root.draw(*cameras[currentCamera], I);
 	}

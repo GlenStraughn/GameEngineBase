@@ -37,6 +37,10 @@ public:
     string getName() {return nameID;}
     
     void removeChild(string name);
+
+	vector<SceneNode*>* getChildren();
+
+	Script* getScript();
     
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }

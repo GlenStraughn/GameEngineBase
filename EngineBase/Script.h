@@ -10,6 +10,7 @@
 
 #include "SceneNode.h"
 #include <map>
+#include "ScriptTypeEnum.h"
 
 class SceneNode;
 
@@ -26,10 +27,18 @@ public:
     virtual void setFloatArray(string variableName, float array[]);
     virtual void setStringValue(string variableName, string value);
     virtual void setStringArray(string variableName, string array[]);
+
+	virtual float getFloatAttribute(string variableName) = 0;
+	virtual string getStringAttribute(string variableName) = 0;
+
+	string getContainingNodeName(){ return node->getName(); };
+	ScriptType getScriptType() { return type; }
+
+	virtual void onEvent() { active = true; }
     
 protected:
+	ScriptType type;
     unsigned int cycles;
     bool active;
     SceneNode* node;
-    
 };

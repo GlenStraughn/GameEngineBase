@@ -21,4 +21,5 @@ public:
     
 private:
     float mass; // Speed at which node draws in children
+	const static string MASS;
 };

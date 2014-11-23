@@ -10,6 +10,16 @@
 #include <math.h>
 #include <glm/glm.hpp>
 
+
+// Definitions moved here because Visual Studio is weird...
+const string OrbitScript::RADIUS = "radius";
+const string OrbitScript::ROTATION_SPEED = "rotationSpeed";
+
+OrbitScript::OrbitScript()
+{
+	type = ORBIT;
+}
+
 void OrbitScript::run()
 {
     const float PI = 3.1415926535;
@@ -42,4 +52,19 @@ void OrbitScript::setFloatValue(string variableName, float value)
     {
         rotationSpeed = value;
     }
+}
+
+
+float OrbitScript::getFloatAttribute(string variableName)
+{
+	if(variableName == RADIUS)
+	{
+		return radius;
+	}
+	else if(variableName == ROTATION_SPEED)
+	{
+		return rotationSpeed;
+	}
+
+	return 0;
 }

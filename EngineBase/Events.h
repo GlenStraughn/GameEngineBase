@@ -32,9 +32,10 @@ class EventManager
 {
 public:
     void addListener(EventListener &listener);
-    void removeListener(string nodeName); // Uses the name of the script's node
-    void handleEvent(Event &event);
+    void removeListener(string &nodeName); // Uses the name of the script's node
+    void handleEvent(Event &e);
     
 private:
-    vector<EventListener*> listerList;
+    vector<EventListener*> listenerList;
+	void handleEventType(Event &e, EventListener &listener);
 };

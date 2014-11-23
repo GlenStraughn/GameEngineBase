@@ -37,8 +37,8 @@ int gWidth = 600; // window width
 int gHeight = 600; // window height
 int gSPP = 16; // samples per pixel
 
-ISoundEngine* soundEngine = NULL;
-ISound* music = NULL;
+//ISoundEngine* soundEngine = NULL;
+//ISound* music = NULL;
 
 Scene gScene;
 

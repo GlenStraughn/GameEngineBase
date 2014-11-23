@@ -37,14 +37,14 @@ using namespace std;
 #include <GLUT/GLUT.h>
 
 // Sound (irrKlang)
-#include "../IrrKlangInclude/irrKlang.h"
-using namespace irrklang;
+//#include "../IrrKlangInclude/irrKlang.h"
+//using namespace irrklang;
 
 //-------------------------------------------------------------------------//
 // MISCELLANEOUS
 //-------------------------------------------------------------------------//
 
-void ERROR(const string &msg, bool doExit = true);
+void ERROR_MSG(const string &msg, bool doExit = true);
 double TIME(void);
 void SLEEP(int millis);
 
@@ -118,7 +118,7 @@ void replaceIncludes(string &src, string &dest, const string &directive,
 //-------------------------------------------------------------------------//
 
 void initSoundEngine(void);
-ISound *loadSound();
+//ISound *loadSound();
 
 //-------------------------------------------------------------------------//
 // IMAGE
