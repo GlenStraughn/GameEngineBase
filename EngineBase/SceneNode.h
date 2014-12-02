@@ -31,7 +31,7 @@ public:
     
     void draw(Camera &camera, Transform &trans);
     
-    void runScript();
+    void runScripts();
     
     void setName(string name){ nameID = name; }
     string getName() {return nameID;}
@@ -40,7 +40,7 @@ public:
 
 	vector<SceneNode*>* getChildren();
 
-	Script* getScript();
+	vector<Script*>* getScripts();
     
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }
@@ -57,5 +57,5 @@ protected:
     
     SceneNode* parent;
     
-    Script* nodeScript;
+    vector<Script*> nodeScripts;
 };

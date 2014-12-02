@@ -16,13 +16,15 @@ SceneNode::SceneNode()
     
     T.refreshTransform();
     
-    nodeScript = NULL;
     parent = NULL;
 }
 
 SceneNode::~SceneNode()
 {
-    delete nodeScript;
+    for(int i = 0; i < nodeScripts.size(); i++)
+	{
+		delete nodeScripts[i];
+	}
     
     for(int i = 0; i < children.size(); i++)
     {
@@ -49,14 +51,9 @@ void SceneNode::addChild(SceneNode* newChild)
 
 void SceneNode::addScript(Script &newScript)
 {
-    if(nodeScript != NULL)
-    {
-        delete nodeScript;
-    }
+	nodeScripts.push_back(&newScript);
     
-    nodeScript = &newScript;
-    
-    nodeScript->setSceneNode(this);
+    nodeScripts[nodeScripts.size() - 1]->setSceneNode(this);
 }
 
 
@@ -88,17 +85,20 @@ void SceneNode::draw(Camera &camera, Transform &trans)
 }
 
 
-void SceneNode::runScript()
+void SceneNode::runScripts()
 {
-    if(nodeScript != NULL && nodeScript->isActive())
-    {
-        nodeScript->run();
-    }
+	for(int i = 0 ; i < nodeScripts.size() ; i++ )
+	{
+		if(nodeScripts[i] != NULL && nodeScripts[i]->isActive())
+		{
+			nodeScripts[i]->run();
+		}
     
-    for(int i = 0; i < children.size(); i++)
-    {
-        children[i]->runScript();
-    }
+		for(int i = 0; i < children.size(); i++)
+		{
+			children[i]->runScripts();
+		}
+	}
 }
 
 
@@ -128,7 +128,7 @@ vector<SceneNode*>* SceneNode::getChildren()
 }
 
 
-Script* SceneNode::getScript()
+vector<Script*>* SceneNode::getScripts()
 {
-	return nodeScript;
+	return &nodeScripts;
 }

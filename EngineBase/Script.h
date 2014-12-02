@@ -21,7 +21,7 @@ public:
     
     virtual void run();
     bool isActive();
-    void toggleActive();
+    virtual void toggleActive();
     void setSceneNode(SceneNode* sNode);
     virtual void setFloatValue(string variableName, float value);
     virtual void setFloatArray(string variableName, float array[]);

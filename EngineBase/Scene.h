@@ -84,7 +84,7 @@ public:
     
     void runNodeScripts()
     {
-        root.runScript();
+        root.runScripts();
     }
     
     bool addNode(string &nodeName, SceneNode &node) // Returns true if added to list, false if can't add to list
