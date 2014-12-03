@@ -8,6 +8,12 @@
 
 #include "Script.h"
 
+Script::Script()
+{
+    active = true;
+    cycles = 0;
+}
+
 void Script::run()
 {
     cycles++;
@@ -23,7 +29,33 @@ void Script::toggleActive()
     active = !active;
 }
 
-void Script::setSceneNode(SceneNode &sNode)
+void Script::setSceneNode(SceneNode *sNode)
 {
-    node = &sNode;
+    node = sNode;
 }
+
+
+void Script::setFloatValue(string variableName, float value)
+{
+    
+}
+
+
+void Script::setFloatArray(string variableName, float array[])
+{
+    
+}
+
+
+void Script::setStringValue(string variableName, string value)
+{
+    
+}
+
+
+void Script::setStringArray(string variableName, string array[])
+{
+    
+}
+
+string Script::getContainingNodeName(){ return node->getName(); }

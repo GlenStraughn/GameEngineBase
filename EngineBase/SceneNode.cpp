@@ -16,13 +16,15 @@ SceneNode::SceneNode()
     
     T.refreshTransform();
     
-    nodeScript = NULL;
     parent = NULL;
 }
 
 SceneNode::~SceneNode()
 {
-    delete nodeScript;
+    for(int i = 0; i < nodeScripts.size(); i++)
+	{
+		delete nodeScripts[i];
+	}
     
     for(int i = 0; i < children.size(); i++)
     {
@@ -49,26 +51,14 @@ void SceneNode::addChild(SceneNode* newChild)
 
 void SceneNode::addScript(Script &newScript)
 {
-    if(nodeScript != NULL)
-    {
-        delete nodeScript;
-    }
+    newScript.setSceneNode(this);
     
-    nodeScript = &newScript;
+	nodeScripts.push_back(&newScript);
 }
-
 
 
 void SceneNode::draw(Camera &camera, Transform &trans)
 {
-    if(parent == NULL)
-    {
-        cout << "Root node draw() call" << endl;
-    }
-    else
-    {
-        cout << "Sub node draw() call" << endl;
-    }
     
     T.refreshTransform();
     
@@ -92,4 +82,53 @@ void SceneNode::draw(Camera &camera, Transform &trans)
     {
         children[i]->draw(camera, parentTrans);
     }
+}
+
+
+void SceneNode::runScripts()
+{
+	for(int i = 0 ; i < nodeScripts.size() ; i++ )
+	{
+		if(nodeScripts[i]->isActive())
+		{
+			nodeScripts[i]->run();
+		}
+	}
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        children[i]->runScripts();
+    }
+}
+
+
+void SceneNode::removeChild(string name)
+{
+    for(int i = 0; i < children.size(); i++)
+    {
+        if(children[i]->getName() == name)
+        {
+            children.erase(children.begin() + i);
+            return;
+        }
+    }
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        children[i]->removeChild(name);
+    }
+    
+    return;
+}
+
+
+vector<SceneNode*>* SceneNode::getChildren()
+{
+	return &children;
+}
+
+
+vector<Script*>* SceneNode::getScripts()
+{
+	return &nodeScripts;
 }

@@ -7,6 +7,8 @@
 
 #include "EngineUtil.h"
 #include "Scene.h"
+#include "generateScript.h"
+#include "Timer.hpp"
 
 //-------------------------------------------------------------------------//
 // Callback for Keyboard Input
@@ -35,8 +37,8 @@ int gWidth = 600; // window width
 int gHeight = 600; // window height
 int gSPP = 16; // samples per pixel
 
-ISoundEngine* soundEngine = NULL;
-ISound* music = NULL;
+//ISoundEngine* soundEngine = NULL;
+//ISound* music = NULL;
 
 Scene gScene;
 
@@ -151,7 +153,7 @@ void loadSceneSettings(FILE *F, Scene *scene)
 			string fileName, fullFileName;
 			getToken(F, fileName, ONE_TOKENS);
 			getFullFileName(fileName, fullFileName);
-			ISound* music = soundEngine->play2D(fullFileName.c_str(), true);
+			//ISound* music = soundEngine->play2D(fullFileName.c_str(), true);
 		}
 	}
 }
@@ -313,9 +315,95 @@ void loadLight(FILE *F, Scene *scene)
 	gNumLights++;
 	if (gNumLights >= MAX_LIGHTS)
 	{
-		ERROR("Too many lights!", false);
+		ERROR_MSG("Too many lights!", false);
 		gNumLights--;
 	}
+}
+
+
+void loadScript(FILE* F, Scene* scene, SceneNode &node)
+{
+    Script* newScript = NULL;
+    string token;
+    while (getToken(F, token, ONE_TOKENS))
+    {
+		if (token == "}")
+        {
+            break;
+        }
+        else if(token == "name" || token == "type" || token == "scriptType")
+        {
+            string scriptName;
+            getToken(F, scriptName, ONE_TOKENS);
+            
+            newScript = generateScript(scriptName);
+            node.addScript(*newScript);
+        }
+        else if(token == "float")
+        {
+            string variableName;
+            float newFloat;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &newFloat, 1);
+            
+            if(newScript != NULL)
+            {
+                newScript->setFloatValue(variableName, newFloat);
+            }
+        }
+        else if(token == "floatArray")
+        {
+            string variableName;
+            float* newArray;
+            float size;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &size, 1);
+            
+            newArray = new float[int(size)];
+            getFloats(F, newArray, int(size));
+            
+            if(newScript != NULL)
+            {
+                newScript->setFloatArray(variableName, newArray);
+            }
+        }
+        else if(token == "string")
+        {
+            string variableName, newString;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getToken(F, newString, ONE_TOKENS);
+            
+            if(newScript != NULL)
+            {
+                newScript->setStringValue(variableName, newString);
+            }
+        }
+        else if(token == "stringArray")
+        {
+            string variableName, *newArray;
+            float size;
+            
+            getToken(F, variableName, ONE_TOKENS);
+            getFloats(F, &size, 1);
+            
+            newArray = new string[int(size)];
+            
+            for(int i = 0; i < size; i++)
+            {
+                getToken(F, newArray[i], ONE_TOKENS);
+            }
+            
+            
+            if(newScript != NULL)
+            {
+                newScript->setStringArray(variableName, newArray);
+            }
+        }
+        
+    }
 }
 
 
@@ -323,6 +411,7 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
 {
     cout << "loading scene node" << endl;
     string token;
+    bool nodeAdded = false;
     
     SceneNode* newNode = new SceneNode();
     
@@ -331,23 +420,37 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
     while (getToken(F, token, ONE_TOKENS)) {
 		//cout << token << endl;
         if (token == "}") break;
-		else if (token == "meshInstance") {
-			loadMeshInstance(F, scene, *newNode);
-        }
-        else if (token == "node" || token == "sceneNode")
+        else if (token == "name" || token == "id" || token == "ID")
         {
-            loadSceneNode(F, scene, *newNode);  // Sub-node initialization
+            string name;
+            getToken(F, name, ONE_TOKENS);
+            
+            nodeAdded = scene->addNode(name, node);
         }
-        else if (token == "translate") {
-			glm::vec3 t;
-			getFloats(F, &t[0], 3);
-			newNode->setTranslation(t);
-		}
-		else if (token == "scale") {
-			glm::vec3 s;
-			getFloats(F, &s[0], 3);
-			newNode->setScale(s);
-		}
+        else if(nodeAdded)
+        {
+            if (token == "meshInstance") {
+                loadMeshInstance(F, scene, *newNode);
+            }
+            else if (token == "node" || token == "sceneNode")
+            {
+                loadSceneNode(F, scene, *newNode);  // Sub-node initialization
+            }
+            else if (token == "translate") {
+                glm::vec3 t;
+                getFloats(F, &t[0], 3);
+                newNode->setTranslation(t);
+            }
+            else if (token == "scale") {
+                glm::vec3 s;
+                getFloats(F, &s[0], 3);
+                newNode->setScale(s);
+            }
+            else if(token == "script")
+            {
+                loadScript(F, scene, *newNode);
+            }
+        }
     }
     
     node.addChild(newNode);
@@ -428,6 +531,7 @@ void update(void)
 	if (gMeshInstance.diffuseColor[1] > 1.0f) gMeshInstance.diffuseColor[1] = 0.25f;
 	if (gMeshInstance.diffuseColor[2] > 1.0f) gMeshInstance.diffuseColor[2] = 0.25f;
 	*/
+    gScene.runNodeScripts();
 }
 
 //-------------------------------------------------------------------------//
@@ -467,30 +571,49 @@ int main(int numArgs, char **args)
 	// start time (used to time framerate)
 	double startTime = TIME();
     
+    Timer logicTimer;
+    logicTimer.setInterval(double(1.0)/double(100.0));
+    Timer renderTimer;
+    renderTimer.setInterval(double(1.0)/double(60.0));
+    
+    logicTimer.resetCycle();
+    renderTimer.resetCycle();
+    
 	// render loop
 	while (true) {
 		// update and render
-		update();
-		render();
-		glfwGetWindowSize(gWindow, &gWidth, &gHeight);
         
-		// handle input
-		glfwPollEvents();
-		if (glfwWindowShouldClose(gWindow) != 0) break;
-		keyboardCameraController(*gScene.cameras[gScene.currentCamera]);
+        if(logicTimer.hasCyclePassed())
+        {
+            update();
+            logicTimer.resetCycle();
+        }
+        
+        if(renderTimer.hasCyclePassed())
+        {
+            render();
+            glfwGetWindowSize(gWindow, &gWidth, &gHeight);
+        
+            // handle input
+            glfwPollEvents();
+            if (glfwWindowShouldClose(gWindow) != 0) break;
+            keyboardCameraController(*gScene.cameras[gScene.currentCamera]);
 
-		double xx, yy;
-		glfwGetCursorPos(gWindow, &xx, &yy);
-		printf("%1.3f %1.3f ", xx, yy);
+            double xx, yy;
+            glfwGetCursorPos(gWindow, &xx, &yy);
+            printf("%1.3f %1.3f ", xx, yy);
         
-		// print framerate
-		double endTime = TIME();
-		printf("\rFPS: %1.0f  ", 1.0/(endTime-startTime));
-		startTime = endTime;
+            // print framerate
+            double endTime = TIME();
+            printf("\rFPS: %1.0f  ", 1.0/(endTime-startTime));
+            startTime = endTime;
         
-		// swap buffers
-		//SLEEP(10); // sleep 1 millisecond to avoid busy waiting
-		glfwSwapBuffers(gWindow);
+            // swap buffers
+            //SLEEP(10); // sleep 1 millisecond to avoid busy waiting
+            glfwSwapBuffers(gWindow);
+            
+            renderTimer.resetCycle();
+        }
 	}
 
 	// Shut down sound engine

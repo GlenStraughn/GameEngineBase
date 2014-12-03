@@ -8,6 +8,9 @@
 
 #include "EngineUtil.h"
 #include "SceneNode.h"
+#include "PhysicsEngine.h"
+
+using namespace std;
 
 #ifndef EngineBase_Scene_h
 #define EngineBase_Scene_h
@@ -18,15 +21,25 @@ public:
 	// Global properties
 	glm::vec3 backgroundColor;
 	string backgroundMusic;
-    int currentCamera = 0;
+    int currentCamera;
+
+	Scene()
+	{
+		currentCamera = 0;
+	}
     
 	// Object pools
 	map<string, TriMesh*> meshes;
 	map<string, RGBAImage*> textures;
+    map<string, SceneNode*> nodeList;
     
 	// Scene graph
     SceneNode root;
 	vector<Camera*> cameras;
+    
+    // Physics
+    PhysicsEngine* collisionEngine;
+    
 	//vector<TriMeshInstance*> meshInstances;
     
 	// getters and setters
@@ -64,15 +77,49 @@ public:
 		/*for (int i = 0; i < (int)meshInstances.size(); i++) {
 			meshInstances[i]->draw(*cameras[currentCamera]);
 		}*/
-        
+
         Transform I;
         I.transform = {1,0,0,0,
                        0,1,0,0,
                        0,0,1,0,
-                       0,0,0,1};
+					   0,0,0,1};
         
         root.draw(*cameras[currentCamera], I);
 	}
+    
+    void runNodeScripts()
+    {
+        root.runScripts();
+    }
+    
+    bool addNode(string &nodeName, SceneNode &node) // Returns true if added to list, false if can't add to list
+    {
+        if(nodeList.find(nodeName) == nodeList.end())
+        {
+            nodeList[nodeName] = &node;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    
+    void removeNode(string nodeName)
+    {
+        map<string, SceneNode*>::iterator iter;
+        
+        iter = nodeList.find(nodeName);
+        
+        if(iter != nodeList.end())
+        {
+            root.removeChild(nodeName);
+            
+            delete nodeList[nodeName];
+            nodeList.erase(iter);
+        }
+    }
 };
 
 #endif

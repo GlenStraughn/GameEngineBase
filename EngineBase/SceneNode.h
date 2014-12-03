@@ -21,6 +21,7 @@ public:
     ~SceneNode();
     
     void setParent(SceneNode &newParent);
+    SceneNode* getParent(){ return parent; }
     
     void addChild(SceneNode* newChild);
     
@@ -30,17 +31,41 @@ public:
     
     void draw(Camera &camera, Transform &trans);
     
+    void runScripts();
+    
+    void setName(string name){ nameID = name; }
+    string getName() {return nameID;}
+    
+    void removeChild(string name);
+
+	vector<SceneNode*>* getChildren();
+
+	vector<Script*>* getScripts();
+    
 	void setScale(const glm::vec3 &s) { T.scale = s; }
 	void setRotation(const glm::quat &r) { T.rotation = r; }
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
+    Transform* getTransform() { return &T; }
+    
+    void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
+    
+    void updatePosition();
     
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;
     
+    string nameID;
+    
     Transform T;
     
     SceneNode* parent;
     
-    Script* nodeScript;
+    vector<Script*> nodeScripts;
+    
+// PHYSICS STUFF
+    
+    glm::vec3 velocity; // Velocity vector
+    
+    bool solid; // Whether or not the object can interact with other entities
 };

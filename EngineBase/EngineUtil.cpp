@@ -15,7 +15,7 @@
 // MISCELLANEOUS
 //-------------------------------------------------------------------------//
 
-void ERROR(const string &msg, bool doExit)
+void ERROR_MSG(const string &msg, bool doExit)
 {
 	cerr << "\nERROR! " << msg << endl;
 	if (doExit) exit(0);
@@ -38,7 +38,7 @@ void SLEEP(int millis)
 GLFWwindow* createOpenGLWindow(int width, int height, const char *title, int samplesPerPixel)
 {
 	// Initialise GLFW
-	if (!glfwInit()) ERROR("Failed to initialize GLFW.", true);
+	if (!glfwInit()) ERROR_MSG("Failed to initialize GLFW.", true);
 	glfwWindowHint(GLFW_SAMPLES, samplesPerPixel);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, MAJOR_VERSION);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, MINOR_VERSION);
@@ -49,7 +49,7 @@ GLFWwindow* createOpenGLWindow(int width, int height, const char *title, int sam
 	GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (window == NULL) {
 		glfwTerminate();
-		ERROR("Failed to open GLFW window.", true);
+		ERROR_MSG("Failed to open GLFW window.", true);
 	}
 	glfwMakeContextCurrent(window);
     
@@ -60,7 +60,7 @@ GLFWwindow* createOpenGLWindow(int width, int height, const char *title, int sam
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) {
 		glfwTerminate();
-		ERROR("Failed to initialize GLEW.", true);
+		ERROR_MSG("Failed to initialize GLEW.", true);
 	}
     
 	glEnable(GL_DEPTH_TEST);
@@ -81,7 +81,7 @@ GLuint loadShader(const string &fileName, GLuint shaderType)
 	// load the shader as a file
 	string mainCode;
 	if (!loadFileAsString(fileName, mainCode)) {
-		ERROR("Could not load file '" + fileName + "'", false);
+		ERROR_MSG("Could not load file '" + fileName + "'", false);
 		return NULL_HANDLE;
 	}
 
@@ -108,7 +108,7 @@ GLuint loadShader(const string &fileName, GLuint shaderType)
 	int status;
 	glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE) {
-		ERROR("compiling shader '" + fileName + "'", false);				
+		ERROR_MSG("compiling shader '" + fileName + "'", false);				
 		GLint msgLength = 0;
 		glGetShaderiv(shaderHandle, GL_INFO_LOG_LENGTH, &msgLength);
 		std::vector<char> msg(msgLength);
@@ -129,7 +129,7 @@ GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader)
 	// Create and link the shader program
 	GLuint shaderProgram = glCreateProgram(); // create handle
 	if (!shaderProgram) {
-		ERROR("could not create the shader program", false);
+		ERROR_MSG("could not create the shader program", false);
 		return NULL_HANDLE;
 	}
 	glAttachShader(shaderProgram, vertexShader);    // attach vertex shader
@@ -140,7 +140,7 @@ GLuint createShaderProgram(GLuint vertexShader, GLuint fragmentShader)
 	int linked;
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &linked); // get link status
 	if (!linked) {
-		ERROR("could not link the shader program", false);
+		ERROR_MSG("could not link the shader program", false);
 		GLint msgLength = 0;
 		glGetShaderiv(shaderProgram, GL_INFO_LOG_LENGTH, &msgLength);
 		std::vector<char> msg(msgLength);
@@ -227,7 +227,7 @@ FILE *openFileForReading(const string &fileName)
 	}
 
 	string msg = "Could not open file " + fileName;
-	ERROR(msg.c_str(), false);
+	ERROR_MSG(msg.c_str(), false);
 	return NULL;
 }
 
@@ -358,7 +358,7 @@ void replaceIncludes(string &src, string &dest, const string &directive,
 		int quoteEnd = (int)src.find("\"", quoteStart + 1);
 		start = quoteEnd + 1;
 		if (quoteStart >= quoteEnd) {
-			ERROR("could not replace includes");
+			ERROR_MSG("could not replace includes");
 			break;
 		}
 		string includeFileName = src.substr(quoteStart + 1, (quoteEnd - quoteStart - 1));
@@ -390,7 +390,7 @@ bool RGBAImage::loadPNG(const string &fileName, bool doFlipY)
 	getFullFileName(fileName, fullName);
 	unsigned error = lodepng::decode(pixels, width, height, fullName.c_str());
 	if (error) {
-		ERROR(lodepng_error_text(error), false);
+		ERROR_MSG(lodepng_error_text(error), false);
 		return false;
 	}
 
@@ -403,7 +403,7 @@ bool RGBAImage::writeToPNG(const string &fileName)
 {
 	unsigned error = lodepng::encode(fileName.c_str(), pixels, width, height);
 	if (error) {
-		ERROR(lodepng_error_text(error), false);
+		ERROR_MSG(lodepng_error_text(error), false);
 		return false;
 	}
 	return true;
@@ -549,7 +549,7 @@ void Material::bindMaterial(Transform &T, Camera &camera)
 	if (loc != -1) glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(T.transform));
 	//
 	loc = glGetUniformLocation(shaderProgram, "uObjectWorldInverseM");
-    printMat(T.invTransform);
+    //printMat(T.invTransform);
 	if (loc != -1) glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(T.invTransform));
 	//
 	glm::mat4x4 objectWorldViewPerspect = camera.worldViewProject * T.transform;
@@ -700,7 +700,6 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             mat.bindMaterial(t, camera);
             if (triMesh != NULL)
             {
-                cout << "drawing mesh" << endl;
                 triMesh->draw();
             }
             else printf("Error! Null Mesh.");
@@ -712,18 +711,16 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             Q = glm::normalize(camera.eye - t.translation);
             
             float theta = atan2(Q.x, Q.z);
-            float phi = asin(Q.y);
             glm::vec3 axis = {0,1,0};
             
             
             glm::mat4x4 R = glm::axisAngleMatrix(axis, theta);
             
-            t.transform = R * t.transform;
+            t.transform = t.transform * R ;
             
             mat.bindMaterial(t, camera);
             if (triMesh != NULL)
             {
-                cout << "drawing billboard" << endl;
                 triMesh->draw();
             }
             else printf("Error! Null Mesh.");
@@ -731,8 +728,34 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             break;
         }
         case POINT_SPRITE:
+        {
+            glm::vec3 Q;
+            Q = glm::normalize(camera.eye - camera.center);
             
+            float theta = atan2(Q.x, Q.z);
+            float phi = asin(Q.y);
+            glm::vec3 axis = {0, 1,0};
+            
+            
+            glm::mat4x4 R = glm::axisAngleMatrix(axis, theta);
+            
+            axis = {-1, 0, 0};
+            glm::mat4x4 Rup = glm::axisAngleMatrix(axis, phi);
+            
+            t.transform = t.transform * R * Rup;
+            
+            mat.bindMaterial(t, camera);
+            
+            if(triMesh != NULL)
+            {
+                triMesh->draw();
+            }
+            else
+            {
+                printf("Error! Null Mesh.");
+            }
             break;
+        }
             
         default:
             break;
