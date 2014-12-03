@@ -68,3 +68,9 @@ float OrbitScript::getFloatAttribute(string variableName)
 
 	return 0;
 }
+
+
+string OrbitScript::getStringAttribute(string variableName)
+{
+    return "null";
+}

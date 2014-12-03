@@ -51,9 +51,9 @@ void SceneNode::addChild(SceneNode* newChild)
 
 void SceneNode::addScript(Script &newScript)
 {
-	nodeScripts.push_back(&newScript);
+    newScript.setSceneNode(this);
     
-    nodeScripts[nodeScripts.size() - 1]->setSceneNode(this);
+	nodeScripts.push_back(&newScript);
 }
 
 
@@ -89,16 +89,16 @@ void SceneNode::runScripts()
 {
 	for(int i = 0 ; i < nodeScripts.size() ; i++ )
 	{
-		if(nodeScripts[i] != NULL && nodeScripts[i]->isActive())
+		if(nodeScripts[i]->isActive())
 		{
 			nodeScripts[i]->run();
 		}
-    
-		for(int i = 0; i < children.size(); i++)
-		{
-			children[i]->runScripts();
-		}
 	}
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        children[i]->runScripts();
+    }
 }
 
 

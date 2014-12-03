@@ -31,7 +31,7 @@ public:
 	virtual float getFloatAttribute(string variableName) = 0;
 	virtual string getStringAttribute(string variableName) = 0;
 
-	string getContainingNodeName(){ return node->getName(); };
+	string getContainingNodeName();
 	ScriptType getScriptType() { return type; }
 
 	virtual void onEvent() { active = true; }

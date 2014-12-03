@@ -23,24 +23,28 @@ void BlackHoleScript::run()
 	vector<SceneNode*> *children = node->getChildren();
 	for(int i = 0; i < children->size(); i++)
 	{
+        vector<Script*> *scripts = children->at(i)->getScripts();
 		// ADJUST RADIUS
-		radius = children->at(i)->getScript()->getFloatAttribute("radius"); // How's THAT for obfuscated?
+        for(int j = 0; j < scripts->size(); j++)
+        {
+            radius = scripts->at(j)->getFloatAttribute("radius"); // How's THAT for obfuscated?
 
-		newRadius = radius - mass/radius;	// Nowhere near accurate to how actual gravitational attraction works
-											// But I don't care.
+            newRadius = radius - mass/radius;	// Nowhere near accurate to how actual gravitational attraction works
+                                                // But I don't care.
 
-		children->at(i)->getScript()->setFloatValue("radius", radius);
+            scripts->at(j)->setFloatValue("radius", radius);
 
-		// ADJUST SCALE
-		glm::vec3 newScale;
-		t = children->at(i)->getTransform();
-		resizeFactor = newRadius/radius;
+            // ADJUST SCALE
+            glm::vec3 newScale;
+            t = children->at(i)->getTransform();
+            resizeFactor = newRadius/radius;
 
-		newScale.x = t->scale.x * resizeFactor;
-		newScale.y = t->scale.y * resizeFactor;
-		newScale.z = t->scale.z * resizeFactor;
+            newScale.x = t->scale.x * resizeFactor;
+            newScale.y = t->scale.y * resizeFactor;
+            newScale.z = t->scale.z * resizeFactor;
 
-		children->at(i)->setScale(newScale);
+            children->at(i)->setScale(newScale);
+        }
 	}
 }
 

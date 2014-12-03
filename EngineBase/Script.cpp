@@ -57,3 +57,5 @@ void Script::setStringArray(string variableName, string array[])
 {
     
 }
+
+string Script::getContainingNodeName(){ return node->getName(); }

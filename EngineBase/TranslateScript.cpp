@@ -61,4 +61,6 @@ float TranslateScript::getFloatAttribute(string variableName)
 	{
 		return velocity.z;
 	}
+    
+    return 0;
 }

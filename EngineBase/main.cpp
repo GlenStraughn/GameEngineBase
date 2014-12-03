@@ -153,7 +153,7 @@ void loadSceneSettings(FILE *F, Scene *scene)
 			string fileName, fullFileName;
 			getToken(F, fileName, ONE_TOKENS);
 			getFullFileName(fileName, fullFileName);
-			ISound* music = soundEngine->play2D(fullFileName.c_str(), true);
+			//ISound* music = soundEngine->play2D(fullFileName.c_str(), true);
 		}
 	}
 }
@@ -315,7 +315,7 @@ void loadLight(FILE *F, Scene *scene)
 	gNumLights++;
 	if (gNumLights >= MAX_LIGHTS)
 	{
-		ERROR("Too many lights!", false);
+		ERROR_MSG("Too many lights!", false);
 		gNumLights--;
 	}
 }

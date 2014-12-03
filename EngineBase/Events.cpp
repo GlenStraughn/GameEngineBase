@@ -51,7 +51,7 @@ void EventManager::handleEventType(Event &e, EventListener &listener)
 	case COLLISION_EVENT:
 		for(int i = 0; i < e.involvedEntities.size(); i++)
 		{
-			if(e.involvedEntities[i]->getName == listener.onEventScript->getContainingNodeName())
+			if(e.involvedEntities[i]->getName() == listener.onEventScript->getContainingNodeName())
 			{
 				listener.onEventScript->onEvent();
 			}

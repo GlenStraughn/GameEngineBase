@@ -17,8 +17,10 @@ public:
 	
 	void run();
     
-    virtual void setFloatValue(string variableName, float value);
+    void setFloatValue(string variableName, float value);
 	float getFloatAttribute(string variableName);
+    
+    string getStringAttribute(string variableName);
     
     // UNUSED INHERITED FUNCTIONS
     // virtual void setFloatArray(string variableName, float array[]);
