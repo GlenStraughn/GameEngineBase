@@ -8,6 +8,7 @@
 
 #include "EngineUtil.h"
 #include "SceneNode.h"
+#include "PhysicsEngine.h"
 
 using namespace std;
 
@@ -35,6 +36,10 @@ public:
 	// Scene graph
     SceneNode root;
 	vector<Camera*> cameras;
+    
+    // Physics
+    PhysicsEngine* collisionEngine;
+    
 	//vector<TriMeshInstance*> meshInstances;
     
 	// getters and setters

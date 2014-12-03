@@ -47,6 +47,10 @@ public:
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
     Transform* getTransform() { return &T; }
     
+    void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
+    
+    void updatePosition();
+    
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;
@@ -58,4 +62,10 @@ protected:
     SceneNode* parent;
     
     vector<Script*> nodeScripts;
+    
+// PHYSICS STUFF
+    
+    glm::vec3 velocity; // Velocity vector
+    
+    bool solid; // Whether or not the object can interact with other entities
 };
