@@ -19,10 +19,13 @@ class PhysicsEngine
 {
 public:
     bool checkCollision(SceneNode &node1, SceneNode &node2);
+    
     void updateNodes(map<string, SceneNode*> nodeList);
+    
     void setEventManager(EventManager &newEventManager);
     
     void setGravity(glm::vec3 &newGravity);
+    
     float getGravity();
     
     
@@ -30,4 +33,6 @@ private:
     EventManager* eventManager;
     
     glm::vec3 gravity; // Vector representing the direction of gravity
+    
+    float restitution; // Controls entropy
 };

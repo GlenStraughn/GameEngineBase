@@ -411,7 +411,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
             endingLineNumber = "87"
-            landmarkName = "runNodeScripts()"
+            landmarkName = "render(void)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -427,8 +427,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
             endingLineNumber = "102"
-            landmarkName = "class Scene"
-            landmarkType = "3">
+            landmarkName = "addNode(string &amp;nodeName, SceneNode &amp;node)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -443,8 +443,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
             endingLineNumber = "102"
-            landmarkName = "class Scene"
-            landmarkType = "3">
+            landmarkName = "addNode(string &amp;nodeName, SceneNode &amp;node)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
