@@ -30,6 +30,8 @@ public:
 
 	virtual float getFloatAttribute(string variableName) = 0;
 	virtual string getStringAttribute(string variableName) = 0;
+    
+    virtual void setPointer(string pointerName, void* pointer){};
 
 	string getContainingNodeName();
 	ScriptType getScriptType() { return type; }

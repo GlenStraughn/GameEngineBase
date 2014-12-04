@@ -1,26 +1,45 @@
 //
-//  Controller.h
+//  Controler.h
 //  EngineBase
 //
-//  Created by STRAUGHN GLEN K on 9/9/14.
+//  Created by STRAUGHN GLEN K on 12/4/14.
 //  Copyright (c) 2014 dave. All rights reserved.
 //
 
 #pragma once
 
+#include<vector>
+#include<string>
+#include<map>
+#include<GL/glew.h>
 #include<GLFW/glfw3.h>
+
+#include"Timer.hpp"
+#include"Scene.h"
+#include"SceneNode.h"
+
+struct Button
+{
+    int buttonID;
+    bool pressed;
+    bool lastState;
+    Timer holdDurationTimer;
+};
 
 class Controller
 {
 public:
-    // Enumerations for the different controller buttons
-    //  ~ Will probably change to more flexible scheme in the future
-    static enum { CONTROLLER_UP, CONTROLLER_DOWN, CONTROLLER_LEFT, CONTROLLER_RIGHT,
-        CONTROLLER_BUTTON_1, CONTROLLER_BUTTON_2, CONTROLLER_BUTTON_3, CONTROLLER_BUTTON_4};
+    void addButton(string buttonName, int buttonID);
     
-    inline void setButton(int newButton, int buttonToAssignTo) {controllerButtons[buttonToAssignTo] = newButton;}
+    bool isButtonPressed(string buttonName);
     
+    float getButtonHoldTime(string buttonName);
     
-private:
-    int controllerButtons[8];
+    void updateButtonStates();
+    
+protected:
+    map<string, Button*> buttons;
+    GLFWwindow* window;
 };
+
+extern void loadControler(FILE* F, Scene* scene, SceneNode &node);
