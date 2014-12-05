@@ -35,6 +35,18 @@ bool Controller::isButtonPressed(string buttonName)
 }
 
 
+bool Controller::getLastState(string buttonName)
+{
+    
+    if(buttons.find(buttonName) != buttons.end()) // If button exists (doesn't not exist)
+    {
+        return buttons[buttonName]->lastState;
+    }
+    
+    return false;
+}
+
+
 float Controller::getButtonHoldTime(string buttonName)
 {
     if(buttons.find(buttonName) != buttons.end()) // If button exists (doesn't not exist)
@@ -52,7 +64,7 @@ void Controller::updateButtonStates()
     map<string, Button*>::iterator i;
     Button* currentButton;
     
-    for(i = buttons.begin(); i != buttons.end(); i++)
+    for(i = buttons.begin(); i != buttons.end(); i++) // Iterate through all buttons
     {
         currentButton = i->second;
         
@@ -65,7 +77,7 @@ void Controller::updateButtonStates()
                 currentButton->holdDurationTimer.resetCycle(); // Reset hold timer
             }
         }
-        else
+        else // If button[i] not pressed
         {
             currentButton->pressed = false;
         }

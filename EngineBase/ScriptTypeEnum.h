@@ -5,4 +5,4 @@
 
 #pragma once
 
-enum ScriptType {ORBIT, BLACK_HOLE, TRANSLATE};
+enum ScriptType {ORBIT, BLACK_HOLE, TRANSLATE, CONTROLLER};

@@ -10,6 +10,7 @@
 
 #include "Script.h"
 #include "OrbitScript.hpp"
+#include "ControllerScript.h"
 #include <string>
 
 Script* generateScript(string &scriptName)
@@ -17,6 +18,10 @@ Script* generateScript(string &scriptName)
     if(scriptName == "orbitScript")
     {
         return new OrbitScript;
+    }
+    else if(scriptName == "controllerScript")
+    {
+        return new ControllerScript;
     }
     else
     {

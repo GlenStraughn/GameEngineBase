@@ -33,6 +33,8 @@ public:
     
     bool isButtonPressed(string buttonName);
     
+    bool getLastState(string buttonName);
+    
     float getButtonHoldTime(string buttonName);
     
     void updateButtonStates();
