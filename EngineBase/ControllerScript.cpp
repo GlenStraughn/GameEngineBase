@@ -24,15 +24,18 @@ const string ControllerScript::LOOK_RIGHT = "LOOK_RIGHT";
 // VARIABLE NAMES
 const string ControllerScript::ROTATION_SPEED = "rotationSpeed";
 const string ControllerScript::TRANSLATION_SPEED = "translationSpeed";
+const string ControllerScript::SCREEN_HEIGHT = "screenHeight";
+const string ControllerScript::SCREEN_WIDTH = "screenWidth";
 
 const string ControllerScript::SCENE_POINTER = "scenePointer";
+const string ControllerScript::WINDOW_POINTER = "windowPointer";
 
 ControllerScript::ControllerScript()
 {
     type = CONTROLLER;
     
-    rotationSpeed = 0.1f;
-    translationSpeed = 0.25f;
+    rotationSpeed = 0.01f;
+    translationSpeed = 0.15f;
     
 // Initialize keys
     controller.addButton(FORWARD, 'W');
@@ -58,6 +61,14 @@ void ControllerScript::setFloatValue(string variableName, float value)
     {
         translationSpeed = value;
     }
+    else if(variableName == SCREEN_WIDTH)
+    {
+        screenWidth = (int)value;
+    }
+    else if(variableName == SCREEN_HEIGHT)
+    {
+        screenHeight = (int)value;
+    }
 }
 
 
@@ -82,6 +93,10 @@ void ControllerScript::setPointer(string pointerName, void* pointer)
     {
         scene = (Scene*)pointer;
     }
+    if(pointerName == WINDOW_POINTER)
+    {
+        controller.setWindow((GLFWwindow*)pointer);
+    }
 }
 
 
@@ -90,61 +105,67 @@ void ControllerScript::setPointer(string pointerName, void* pointer)
 //===================================================================//
 void ControllerScript::run()
 {
+    controller.updateButtonStates();
+    
+    Camera* camera = scene->cameras[scene->currentCamera];
+    
     if(controller.isButtonPressed(FORWARD))
     {
         glm::vec3 transVec(0, 0, -translationSpeed);
-        scene->cameras[scene->currentCamera]->translateLocal(transVec);
+        camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(BACKWARD))
     {
         glm::vec3 transVec(0, 0, translationSpeed);
-        scene->cameras[scene->currentCamera]->translateLocal(transVec);
+        camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(STRAFE_LEFT))
     {
         glm::vec3 transVec(translationSpeed, 0, 0);
-        scene->cameras[scene->currentCamera]->translateLocal(transVec);
+        camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(STRAFE_RIGHT))
     {
         glm::vec3 transVec(-translationSpeed, 0, 0);
-        scene->cameras[scene->currentCamera]->translateLocal(transVec);
+        camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(ASCEND))
     {
         glm::vec3 transVec(0, translationSpeed, 0);
-        scene->cameras[scene->currentCamera]->translateGlobal(transVec);
+        camera->translateGlobal(transVec);
     }
     
     if(controller.isButtonPressed(DESCEND))
     {
         glm::vec3 transVec(0, -translationSpeed, 0);
-        scene->cameras[scene->currentCamera]->translateGlobal(transVec);
+        camera->translateGlobal(transVec);
     }
     
     if(controller.isButtonPressed(LOOK_UP))
     {
-        scene->cameras[scene->currentCamera]->rotateGlobal(glm::vec3(1,0,0), rotationSpeed);
+        camera->rotateGlobal(glm::vec3(1,0,0), rotationSpeed);
     }
     
     if(controller.isButtonPressed(LOOK_DOWN))
     {
-        scene->cameras[scene->currentCamera]->rotateGlobal(glm::vec3(1,0,0), -rotationSpeed);
+        camera->rotateGlobal(glm::vec3(1,0,0), -rotationSpeed);
     }
     
     
     if(controller.isButtonPressed(LOOK_LEFT))
     {
-        scene->cameras[scene->currentCamera]->rotateGlobal(glm::vec3(0,1,0), rotationSpeed);
+        camera->rotateGlobal(glm::vec3(0,1,0), rotationSpeed);
     }
     
     
-    if(controller.isButtonPressed(LOOK_UP))
+    if(controller.isButtonPressed(LOOK_RIGHT))
     {
-        scene->cameras[scene->currentCamera]->rotateGlobal(glm::vec3(1,0,0), -rotationSpeed);
+        camera->rotateGlobal(glm::vec3(0,1,0), -rotationSpeed);
     }
+    
+    camera->refreshTransform(screenWidth, screenHeight);
 }

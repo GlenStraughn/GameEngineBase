@@ -33,6 +33,8 @@ protected:
     float rotationSpeed;
     float translationSpeed;
     
+    int screenWidth, screenHeight;
+    
     Scene* scene;
  
 private:
@@ -51,6 +53,9 @@ private:
 // Variable names
     static const string ROTATION_SPEED;
     static const string TRANSLATION_SPEED;
+    static const string SCREEN_WIDTH;
+    static const string SCREEN_HEIGHT;
     
     static const string SCENE_POINTER;
+    static const string WINDOW_POINTER;
 };

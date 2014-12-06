@@ -50,6 +50,7 @@ bool g_switchCamera;
 
 void keyboardCameraController(Camera &camera)
 {
+    /*
 	float t = 0.025f;
 	float r = 0.01f;
 
@@ -114,6 +115,7 @@ void keyboardCameraController(Camera &camera)
         g_switchCamera = true;
     }
 	camera.refreshTransform((float)gWidth, (float)gHeight);
+     */
 }
 
 //-------------------------------------------------------------------------//
@@ -404,6 +406,8 @@ void loadScript(FILE* F, Scene* scene, SceneNode &node)
         }
         
     }
+    
+    loadSpecialCase(F, scene, *newScript);
 }
 
 
@@ -425,7 +429,9 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             string name;
             getToken(F, name, ONE_TOKENS);
             
-            nodeAdded = scene->addNode(name, node);
+            newNode->setName(name);
+            
+            nodeAdded = scene->addNode(name, *newNode);
         }
         else if(nodeAdded)
         {

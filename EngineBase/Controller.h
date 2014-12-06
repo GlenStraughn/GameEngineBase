@@ -39,9 +39,10 @@ public:
     
     void updateButtonStates();
     
+    void setWindow(GLFWwindow* windowPtr);
+    
 protected:
     map<string, Button*> buttons;
     GLFWwindow* window;
 };
 
-extern void loadControler(FILE* F, Scene* scene, SceneNode &node);

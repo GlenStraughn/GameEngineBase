@@ -28,7 +28,8 @@ bool Controller::isButtonPressed(string buttonName)
 {
     if(buttons.find(buttonName) != buttons.end()) // If button exists (doesn't not exist)
     {
-        return buttons[buttonName]->pressed;
+        bool result = buttons[buttonName]->pressed;
+        return result;
     }
     
     return false;
@@ -55,6 +56,13 @@ float Controller::getButtonHoldTime(string buttonName)
     }
     
     return -1.0;
+}
+
+
+
+void Controller::setWindow(GLFWwindow* windowPtr)
+{
+    window = windowPtr;
 }
 
 

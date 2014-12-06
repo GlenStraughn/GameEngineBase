@@ -28,3 +28,22 @@ Script* generateScript(string &scriptName)
         return NULL;
     }
 }
+
+extern GLFWwindow* gWindow;
+extern int gWidth;
+extern int gHeight;
+
+void loadSpecialCase(FILE* F, Scene* scene, Script &script)
+{
+    switch(script.getScriptType())
+    {
+        case CONTROLLER:
+        {
+            script.setPointer( "scenePointer", scene);
+            script.setPointer( "windowPointer", gWindow);
+            script.setFloatValue("screenHeight", gHeight);
+            script.setFloatValue("screenWidth", gWidth);
+            break;
+        }
+    }
+}
