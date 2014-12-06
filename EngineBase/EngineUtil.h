@@ -276,6 +276,7 @@ public:
     enum MeshDrawType {
         MESH,
         BILLBOARD,
+        PARTICLE,
         POINT_SPRITE
     };
     

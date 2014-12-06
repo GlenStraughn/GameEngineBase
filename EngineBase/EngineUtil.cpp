@@ -727,6 +727,28 @@ void TriMeshInstance::draw(Camera &camera, Transform &t)
             
             break;
         }
+        case PARTICLE:
+        {
+            glm::vec3 Q;
+            Q = glm::normalize(camera.eye - t.translation);
+            
+            float theta = atan2(Q.x, Q.z);
+            glm::vec3 axis = {0,1,0};
+            
+            
+            glm::mat4x4 R = glm::axisAngleMatrix(axis, theta);
+            
+            t.transform = t.transform * R ;
+            
+            mat.bindMaterial(t, camera);
+            if (triMesh != NULL)
+            {
+                triMesh->draw();
+            }
+            else printf("Error! Null Mesh.");
+            
+            break;
+        }
         case POINT_SPRITE:
         {
             glm::vec3 Q;
