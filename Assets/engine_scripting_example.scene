@@ -1,0 +1,43 @@
+
+node
+{
+	meshInstance
+	{
+		mesh "sphereCenter.ply"
+		vertexShader "basicVertexShader.vs"
+		fragmentShader "phongShading.fs"
+		diffuseTexture "hex.png"
+		diffuseColor [1 1 1]
+	}
+	translation [0 0 0]
+	rotation [0 0 0 0]
+	
+	node
+	{
+		meshInstance
+		{
+			mesh "sphereCenter.ply"
+			vertexShader "basicVertexShader.vs"
+			fragmentShader "phongShading.fs"
+			diffuseTexture "hex.png"
+			diffuseColor [1 1 1]
+		}
+		translation [4 0 0]
+		rotation [0 0 0 0]
+		
+		script
+		{
+			scriptType "orbitScript"
+			radius 3
+			rotationSpeed -0.7
+		}
+	}
+	
+}
+
+light
+{
+	type "point"
+	location [0 0 0]
+	color [1 1 1]
+}

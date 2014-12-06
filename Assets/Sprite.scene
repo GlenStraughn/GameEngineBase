@@ -1,0 +1,95 @@
+
+worldSettings
+{
+	windowTitle "Sprint 2"
+	width 1200
+	height 900
+	spp 16
+}
+
+sceneSettings
+{
+	backgroundColor [255 255 0]
+	#backgroundMusic "ifILoseMyself.mp3"
+}
+
+camera
+{
+	name "camera1"
+	eye [0 0 1]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+camera
+{
+	name "camera2"
+	eye [0 0 -1]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+
+
+
+node
+{
+    meshInstance
+    {
+        name "sun1"
+        mesh "square.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "spriteShading.fs"
+        texture uDiffuseTex "link.png"
+        texture uOtherTex "link.png"
+        type sprite
+    }
+    translate [0, 0, 0]
+    scale [0.1 0.1 0.1]
+}
+
+
+node
+{
+    meshInstance
+    {
+        name "goob"
+        mesh "sphereCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "spriteShading.fs"
+        texture uDiffuseTex "specular.png"
+        texture uOtherTex "specular.png"
+        type mesh
+    }
+    translate [0, -2, 0]
+    scale [0.1 0.1 0.1]
+}
+
+
+light
+{
+	type "directional"
+	direction [1 1 1]
+	color [0.5 0.5 0.5]
+}
+
+
+light
+{
+	type "ambient"
+	position [0 5 0]
+	color [0.2 0.2 0.2]
+	direction [0 -1 0]
+	attenuation [1 0 1]
+	coneAngles [0.39 0.4]
+}

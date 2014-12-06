@@ -1,0 +1,88 @@
+
+worldSettings
+{
+	windowTitle "Test Scene"
+	width 1200
+	height 600
+	spp 4
+	backgroundColor [0.5 0.5 0.8]
+	backgroundMusic 
+    "bell.wav"
+}
+
+camera
+{
+	name "camera1"
+	eye [0 0 6]
+	center [0 0.1 0]
+	vup [0 1 0]
+	fovy 0.4
+	znear 0.1
+	zfar 1000
+}
+
+mesh
+{
+	file "monkeyTex.ply"
+}
+
+mesh
+{
+    file "sphereCenter.ply"
+}
+
+meshInstance
+{
+	name "monkey1"
+	mesh "monkeyTex.ply"
+	scale [0.5 0.5 0.5]
+    translation [1 0 0]
+    rotation [0 0 0]
+	vertexShader basicVertexShader.vs
+	fragmentShader diffuseTexture.fs
+	diffuseTexture "hex.png"
+}
+
+meshInstance
+{
+    name "sphere"
+	mesh "square.ply"
+	scale [0.5 0.5 0.5]
+    translation [-1 0 0]
+    rotation [0 0 0]
+	vertexShader basicVertexShader.vs
+	fragmentShader phongShading.fs
+	diffuseTexture "hex.png"
+}
+
+controler
+{
+    name "controler1"
+    
+    left 'a'
+    right 'd'
+    forward 'w'
+    backward 's'
+    
+    rotateLeft leftArrow
+    rotateRight rightArrow
+    rotateUp upArrow
+    rotateDown downArrow
+}
+
+light
+{
+	type "directional"
+	direction [1 1 1]
+	color [0.5 0.5 0.5]
+}
+
+light
+{
+	type "ambient"
+	position [0 5 0]
+	color [0.2 0.2 0.2]
+	direction [0 -1 0]
+	attenuation [1 0 1]
+	coneAngles [0.39 0.4]
+}
