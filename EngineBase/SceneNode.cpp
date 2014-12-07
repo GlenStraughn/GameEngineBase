@@ -132,3 +132,34 @@ vector<Script*>* SceneNode::getScripts()
 {
 	return &nodeScripts;
 }
+
+
+SceneNode* SceneNode::getNodeReference(string &nodeName)
+{
+    if(nameID == nodeName)
+    {
+        return this;
+    }
+    
+    SceneNode* np;
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        np = children[i]->getNodeReference(nodeName);
+        
+        if(np != NULL && np->getName() == nodeName)
+        {
+            return np;
+        }
+    }
+    
+    return NULL;
+}
+
+
+void SceneNode::addDescendant(string &childName, SceneNode &nodeToAdd)
+{
+    SceneNode* p_node = getNodeReference(childName);
+    
+    p_node->addChild(&nodeToAdd);
+}

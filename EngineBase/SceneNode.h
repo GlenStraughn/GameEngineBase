@@ -51,6 +51,10 @@ public:
     
     void updatePosition();
     
+    SceneNode* getNodeReference(string &nodeName);
+    
+    void addDescendant(string &childName, SceneNode &nodeToAdd);
+    
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;
