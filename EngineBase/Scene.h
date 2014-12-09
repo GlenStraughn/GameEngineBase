@@ -38,7 +38,7 @@ public:
 	vector<Camera*> cameras;
     
     // Physics
-    PhysicsEngine* collisionEngine;
+
     
 	//vector<TriMeshInstance*> meshInstances;
     
