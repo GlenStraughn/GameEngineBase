@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
             endingLineNumber = "52"
-            landmarkName = "SceneNode::addScript(Script &amp;newScript)"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -30,9 +30,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "render(void)"
-            landmarkType = "5">
+            endingLineNumber = "76">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -270,7 +268,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
-            endingLineNumber = "123">
+            endingLineNumber = "123"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -285,7 +285,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
             endingLineNumber = "97"
-            landmarkName = "SceneNode::runScripts()"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -394,9 +394,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "render(void)"
-            landmarkType = "5">
+            endingLineNumber = "81">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -410,9 +408,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "render(void)"
-            landmarkType = "5">
+            endingLineNumber = "87">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -426,9 +422,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "addNode(string &amp;nodeName, SceneNode &amp;node)"
-            landmarkType = "5">
+            endingLineNumber = "102">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -442,9 +436,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "addNode(string &amp;nodeName, SceneNode &amp;node)"
-            landmarkType = "5">
+            endingLineNumber = "102">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -459,7 +451,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
             endingLineNumber = "54"
-            landmarkName = "SceneNode::addScript(Script &amp;newScript)"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -475,7 +467,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
             endingLineNumber = "56"
-            landmarkName = "SceneNode::addScript(Script &amp;newScript)"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -491,7 +483,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
-            landmarkName = "SceneNode::runScripts()"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -507,7 +499,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "SceneNode::runScripts()"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -955,7 +947,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
             endingLineNumber = "76"
-            landmarkName = "SceneNode::draw(Camera &amp;camera, Transform &amp;trans)"
+            landmarkName = "SceneNode::addDescendant(string &amp;childName, SceneNode &amp;nodeToAdd)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -986,9 +978,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "getNode(string &amp;nodeName)"
-            landmarkType = "5">
+            endingLineNumber = "128">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
