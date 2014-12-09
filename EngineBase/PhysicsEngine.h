@@ -18,7 +18,7 @@ using namespace std;
 class PhysicsEngine
 {
 public:
-    bool checkCollision(SceneNode *node1, SceneNode *node2);
+    bool checkCollision(SceneNode &node1, SceneNode &node2);
     
     void updateNodes(map<string, SceneNode*> nodeList);
     
@@ -26,7 +26,7 @@ public:
     
     void setGravity(glm::vec3 &newGravity);
     
-    glm::vec3 getGravity();
+    float getGravity();
     
     
 private:
