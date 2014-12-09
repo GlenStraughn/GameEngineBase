@@ -23,10 +23,12 @@ Script* generateScript(string &scriptName)
     {
         return new ControllerScript;
     }
-    else
+    else if(scriptName == "particleScript" || scriptName == "particleHandlerScript")
     {
-        return NULL;
+        // return new ParticleScript;
     }
+    
+    return NULL;
 }
 
 extern GLFWwindow* gWindow;
