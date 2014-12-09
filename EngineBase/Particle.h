@@ -13,11 +13,11 @@
 #include <string>
 #include "SceneNode.h"
 #include "Events.h"
-#include "ParticleHandler.h"
+//#include "ParticleHandler.h"
 
 using namespace std;
 
-class ParticleHandler;
+//class ParticleHandler;
 
 class Particle
 {
@@ -36,5 +36,5 @@ public:
     }
     
 private:
-    ParticleHandler* particleHandler;
+   // ParticleHandler* particleHandler;
 };
