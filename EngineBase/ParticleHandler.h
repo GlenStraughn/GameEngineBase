@@ -8,6 +8,12 @@
 #pragma once
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#include <vector>
+#include <algorithm>
+
+#include <GL/glew.h>
 #include "Particle.h"
 #include "Scene.h"
 
