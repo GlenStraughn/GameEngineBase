@@ -52,6 +52,7 @@ public:
     void updatePosition();
     Transform T;
     
+    SceneNode* getNodeReference(string &nodeName);
     float body[3]; //x,y,z
     glm::vec3 velocity; // Velocity vector
     glm::vec3 speed; // Velocity vector
@@ -60,8 +61,6 @@ public:
     float restitution;
     void setBody(float bodyTemp[3]);
     void setRestitution (float res);
-    
-    SceneNode* getNodeReference(string &nodeName);
     
     void addDescendant(string &childName, SceneNode &nodeToAdd);
     

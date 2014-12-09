@@ -133,11 +133,42 @@ vector<Script*>* SceneNode::getScripts()
 	return &nodeScripts;
 }
 
+
+SceneNode* SceneNode::getNodeReference(string &nodeName)
+{
+    if(nameID == nodeName)
+    {
+        return this;
+    }
+    
+    SceneNode* np;
+    
+    for(int i = 0; i < children.size(); i++)
+    {
+        np = children[i]->getNodeReference(nodeName);
+        
+        if(np != NULL && np->getName() == nodeName)
+        {
+            return np;
+        }
+    }
+
+    return NULL;
+}
+
 void SceneNode::setBody(float bodyTemp[3]) {
     body[0] = bodyTemp[0];
     body[1] = bodyTemp[1];
     body[2] = bodyTemp[2];
     solid = true;
+}
+
+
+void SceneNode::addDescendant(string &childName, SceneNode &nodeToAdd)
+{
+    SceneNode* p_node = getNodeReference(childName);
+    
+    p_node->addChild(&nodeToAdd);
 }
 
 void SceneNode::setRestitution (float res) {
