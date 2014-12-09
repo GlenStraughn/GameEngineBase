@@ -12,13 +12,13 @@
 #include <string>
 #include "SceneNode.h"
 #include "Events.h"
-
+/*
 using namespace std;
 
 class PhysicsEngine
 {
 public:
-    bool checkCollision(SceneNode &node1, SceneNode &node2);
+    bool checkCollision(SceneNode *node1, SceneNode *node2);
     
     void updateNodes(map<string, SceneNode*> nodeList);
     
@@ -26,7 +26,7 @@ public:
     
     void setGravity(glm::vec3 &newGravity);
     
-    float getGravity();
+    glm::vec3 getGravity();
     
     
 private:
@@ -35,4 +35,4 @@ private:
     glm::vec3 gravity; // Vector representing the direction of gravity
     
     float restitution; // Controls entropy
-};
+};*/
