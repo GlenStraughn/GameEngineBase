@@ -20,6 +20,8 @@ public:
     SceneNode();
     ~SceneNode();
     
+    Transform T;
+    
     void setParent(SceneNode &newParent);
     SceneNode* getParent(){ return parent; }
     
@@ -46,23 +48,22 @@ public:
 	void setRotation(const glm::quat &r) { T.rotation = r; }
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
     Transform* getTransform() { return &T; }
-//    
-//    void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
-//    
-//    void updatePosition();
+    void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
+    
+    void updatePosition();
     
     SceneNode* getNodeReference(string &nodeName);
     
     void addDescendant(string &childName, SceneNode &nodeToAdd);
     
-   // float body[3]; //x,y,z
+    float body[3]; //x,y,z
     glm::vec3 velocity; // Velocity vector
-  //  glm::vec3 speed; // Velocity vector
-  //  glm::vec3 force; // Velocity vector
+    glm::vec3 speed; // Velocity vector
+    glm::vec3 force; // Velocity vector
     bool solid; // Whether or not the object can interact with other entities
     float restitution;
- //   void setBody(float bodyTemp[3]);
- //   void setRestitution (float res);
+    void setBody(float bodyTemp[3]);
+    void setRestitution (float res);
     
 
     
@@ -72,7 +73,7 @@ protected:
     
     string nameID;
     
-    Transform T;
+    
     
     SceneNode* parent;
     

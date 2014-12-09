@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 dave. All rights reserved.
 //
 
-/*
+
 #include "PhysicsEngine.h"
 #include "SceneNode.h"
 
@@ -108,4 +108,4 @@ void PhysicsEngine::setGravity(glm::vec3 &newGravity) {
 
 glm::vec3 PhysicsEngine::getGravity() {
     return gravity;
-}*/
+}

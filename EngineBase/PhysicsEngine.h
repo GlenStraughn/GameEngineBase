@@ -12,7 +12,7 @@
 #include <string>
 #include "SceneNode.h"
 #include "Events.h"
-/*
+
 using namespace std;
 
 class PhysicsEngine
@@ -35,4 +35,4 @@ private:
     glm::vec3 gravity; // Vector representing the direction of gravity
     
     float restitution; // Controls entropy
-};*/
+};
