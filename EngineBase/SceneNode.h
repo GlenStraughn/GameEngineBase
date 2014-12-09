@@ -50,8 +50,17 @@ public:
     void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
     
     void updatePosition();
+    Transform T;
     
     SceneNode* getNodeReference(string &nodeName);
+    float body[3]; //x,y,z
+    glm::vec3 velocity; // Velocity vector
+    glm::vec3 speed; // Velocity vector
+    glm::vec3 force; // Velocity vector
+    bool solid; // Whether or not the object can interact with other entities
+    float restitution;
+    void setBody(float bodyTemp[3]);
+    void setRestitution (float res);
     
     void addDescendant(string &childName, SceneNode &nodeToAdd);
     
@@ -61,7 +70,6 @@ protected:
     
     string nameID;
     
-    Transform T;
     
     SceneNode* parent;
     
@@ -69,7 +77,7 @@ protected:
     
 // PHYSICS STUFF
     
-    glm::vec3 velocity; // Velocity vector
     
-    bool solid; // Whether or not the object can interact with other entities
+    
+    
 };
