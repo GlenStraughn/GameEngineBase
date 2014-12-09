@@ -61,6 +61,10 @@ public:
     void setBody(float bodyTemp[3]);
     void setRestitution (float res);
     
+    SceneNode* getNodeReference(string &nodeName);
+    
+    void addDescendant(string &childName, SceneNode &nodeToAdd);
+    
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;

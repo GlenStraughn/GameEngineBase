@@ -120,6 +120,24 @@ public:
             nodeList.erase(iter);
         }
     }
+    
+    
+    
+    SceneNode* getNode(string &nodeName)
+    {
+        return root.getNodeReference(nodeName);
+    }
+    
+    
+    void addNodeToTree(string &parentName, SceneNode &node)
+    {
+        if(nodeList.find(parentName) != nodeList.end())
+        {
+            nodeList[node.getName()] = &node;
+            
+            root.addDescendant(parentName, node);
+        }
+    }
 };
 
 #endif

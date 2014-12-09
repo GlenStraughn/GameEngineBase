@@ -1,0 +1,88 @@
+
+worldSettings
+{
+	windowTitle "Sprint 2"
+	width 1200
+	height 900
+	spp 16
+}
+
+sceneSettings
+{
+	backgroundColor [0 0 0]
+	#backgroundMusic "ifILoseMyself.mp3"
+}
+
+camera
+{
+	name "camera1"
+	eye [0 6 10]
+	center [0 0 10]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+camera
+{
+	name "camera2"
+	eye [0 6 10]
+	center [0 0 -10]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+
+meshInstance
+{
+	name "sun1"
+	mesh "sphereCenter.ply"
+	scale [5 5 5]
+    translate [3, 3, -1]
+	vertexShader "basicVertexShader.vs"
+	fragmentShader "phongShading.fs"
+    texture uDiffuseTex "specular.png"
+	texture uOtherTex "specular.png"
+}
+
+node
+{
+    meshInstance
+    {
+        name "cubePlanet1"
+        mesh "cubeCenter.ply"
+        scale []
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "phongShading.fs"
+        texture uDiffuseTex "hex.png"
+        texture uOtherTex "hex.png"
+    }
+}
+
+light
+{
+	type "directional"
+	direction [1 1 1]
+	color [0.5 0.5 0.5]
+}
+
+light
+{
+	type "point"
+	position [0 2 0]
+	color [10 10 10]
+	attenuation [1 0 1]
+}
+
+light
+{
+	type "ambient"
+	position [0 5 0]
+	color [0.2 0.2 0.2]
+	direction [0 -1 0]
+	attenuation [1 0 1]
+	coneAngles [0.39 0.4]
+}
