@@ -13,28 +13,33 @@
 #include <string>
 #include "SceneNode.h"
 #include "Events.h"
-#include "ParticleHandler.h"
 
 using namespace std;
 
-class ParticleHandler;
+class mInstance
+{
+public:
+    //string name;
+    string mesh;
+    string vertexShader;
+    string fragmentShader;
+    map<string, string> textures;
+    string type;
+};
 
 class Particle
 {
 public:
     glm::vec3 pos, speed;
     unsigned char r,g,b,a; // Color
+    glm::vec3 scale;
     float size, angle, weight;
     float life; // Remaining life of the particle. if <0 : dead and unused.
     float cameradistance; // *Squared* distance to the camera. if dead : -1.0f
-    string meshName;
-    string spriteName;
+    mInstance meshI;
     
     bool operator<(const Particle& that) const {
         // Sort in reverse order : far particles drawn first.
         return this->cameradistance > that.cameradistance;
     }
-    
-private:
-    ParticleHandler* particleHandler;
 };

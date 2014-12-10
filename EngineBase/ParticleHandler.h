@@ -11,6 +11,7 @@
 #include <stdlib.h>
 
 #include <vector>
+#include <map>
 #include <algorithm>
 
 #include <GL/glew.h>
@@ -19,17 +20,27 @@
 
 //class Particle;
 
+
+
 class ParticleHandler
 {
 public:
     int FindUnusedParticle();
     void SortParticles();
     void SimulationScript();
+    void addMeshInstance(mInstance mesh);
+    void setMeshes();
     
 private:
     static const int MaxParticles = 500;
+    
     Particle ParticlesContainer[MaxParticles];
-    //Particle ParticlesContainer[MaxParticles];
+    
     int LastUsedParticle = 0;
+    
+    vector<string> spriteNames;
+    vector<string> meshNames;
     double lastTime = glfwGetTime();
+    
+    vector<mInstance> mInstances;
 };

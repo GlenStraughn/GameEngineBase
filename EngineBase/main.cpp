@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "generateScript.h"
 #include "Timer.hpp"
+#include "ParticleHandler.h"
 
 //-------------------------------------------------------------------------//
 // Callback for Keyboard Input
@@ -322,6 +323,115 @@ void loadLight(FILE *F, Scene *scene)
 	}
 }
 
+void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node)
+{
+    //string token;
+    
+    //while (getToken(F, token, ONE_TOKENS)) {
+        
+    //}
+    ParticleHandler *newParticleHandler;
+    mInstance *newMI1;
+    newMI1->mesh = "square.ply";
+    newMI1->vertexShader = "basicVertexShader.vs";
+    newMI1->fragmentShader = "spriteShading.fs";
+    newMI1->textures["uDiffuseTex"] = "link.png";
+    newMI1->textures["uOtherText"] = "link.png";
+    newMI1->type = "sprite";
+    
+    mInstance *newMI2;
+    newMI2->mesh = "cubePlanet1";
+    newMI2->vertexShader = "basicVertexShader.vs";
+    newMI2->fragmentShader = "phongShading.fs";
+    newMI2->textures["uDiffuseTex"] = "hex.png";
+    newMI2->textures["uOtherTex"] = "hex.png";
+    newMI2->type = "mesh";
+    
+    newParticleHandler->SimulationScript();
+    
+    
+//    string token;
+//    GLuint vertexShader = NULL_HANDLE;
+//    GLuint fragmentShader = NULL_HANDLE;
+//    GLuint shaderProgram = NULL_HANDLE;
+//    TriMeshInstance *meshInstance = new TriMeshInstance();
+//    node.addTriMeshInstance(*meshInstance);
+//    
+//    while (getToken(F, token, ONE_TOKENS)) {
+//        if (token == "}") {
+//            break;
+//        }
+//        else if (token == "vertexShader") {
+//            string vsFileName;
+//            getToken(F, vsFileName, ONE_TOKENS);
+//            vertexShader = loadShader(vsFileName.c_str(), GL_VERTEX_SHADER);
+//        }
+//        else if (token == "fragmentShader") {
+//            string fsFileName;
+//            getToken(F, fsFileName, ONE_TOKENS);
+//            fragmentShader = loadShader(fsFileName.c_str(), GL_FRAGMENT_SHADER);
+//        }
+//        else if (token == "texture") {
+//            string texAttributeName;
+//            getToken(F, texAttributeName, ONE_TOKENS);
+//            string texFileName;
+//            getToken(F, texFileName, ONE_TOKENS);
+//            RGBAImage *image = scene->getTexture(texFileName);
+//            if (image == NULL) {
+//                image = new RGBAImage();
+//                image->loadPNG(texFileName);
+//                image->sendToOpenGL();
+//                scene->addTexture(image);
+//            }
+//            NameIdVal<RGBAImage*> texref(texAttributeName, -1, image);
+//            meshInstance->mat.textures.push_back(texref);
+//        }
+//        else if (token == "mesh") {
+//            string meshName;
+//            getToken(F, meshName, ONE_TOKENS);
+//            TriMesh *mesh = scene->getMesh(meshName);
+//            if (mesh == NULL) {
+//                mesh = new TriMesh();
+//                mesh->readFromPly(meshName);
+//                mesh->sendToOpenGL();
+//                scene->addMesh(mesh);
+//            }
+//            meshInstance->setMesh(mesh);
+//        }
+//        else if (token == "translate") {
+//            glm::vec3 t;
+//            getFloats(F, &t[0], 3);
+//            meshInstance->T.translation += t;
+//        }
+//        else if (token == "scale") {
+//            glm::vec3 s;
+//            getFloats(F, &s[0], 3);
+//            meshInstance->T.scale *= s;
+//        }
+//        else if (token == "type")
+//        {
+//            string typeTag;
+//            getToken(F, typeTag, ONE_TOKENS);
+//            
+//            if(typeTag == "mesh")
+//            {
+//                meshInstance->meshType = TriMeshInstance::MeshDrawType::MESH;
+//            }
+//            else if(typeTag == "billboard")
+//            {
+//                meshInstance->meshType = TriMeshInstance::MeshDrawType::BILLBOARD;
+//            }
+//            else if(typeTag == "sprite" || typeTag == "pointSprite")
+//            {
+//                meshInstance->meshType = TriMeshInstance::MeshDrawType::POINT_SPRITE;
+//            }
+//        }
+//    }
+//    
+//    shaderProgram = createShaderProgram(vertexShader, fragmentShader);
+//    meshInstance->mat.shaderProgram = shaderProgram;
+}
+
 
 void loadScript(FILE* F, Scene* scene, SceneNode &node)
 {
@@ -456,6 +566,9 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             {
                 loadScript(F, scene, *newNode);
             }
+            else if(token == "particleHanlder") {
+                loadParticleHandler(F, scene, *newNode);
+            }
         }
     }
     
@@ -498,6 +611,9 @@ void loadScene(const char *sceneFile, Scene *scene)
 		else if (token == "light") {
 			loadLight(F, scene);
 		}
+        else if (token == "particleHandler") {
+            loadParticleHandler(F, scene, scene->root);
+        }
         else if (token == "node" || token == "sceneNode")
         {
             loadSceneNode(F, scene, scene->root);

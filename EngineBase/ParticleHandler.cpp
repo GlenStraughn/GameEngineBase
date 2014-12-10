@@ -8,6 +8,13 @@
 
 #include "ParticleHandler.h"
 
+extern Scene gScene;
+const Scene currentScene = gScene;
+
+void ParticleHandler::addMeshInstance(mInstance newMesh){
+    mInstances.push_back(newMesh);
+}
+
 int ParticleHandler::FindUnusedParticle(){
     
     for(int i = LastUsedParticle; i < MaxParticles; i++){
@@ -31,14 +38,24 @@ void ParticleHandler::SortParticles(){
     std::sort(&ParticlesContainer[0], &ParticlesContainer[MaxParticles]);
 }
 
+void ParticleHandler::setMeshes() {
+    for(int i = 0; i < MaxParticles; ++i)
+        ParticlesContainer[i].meshI = mInstances[0];
+}
+
 void ParticleHandler::SimulationScript() {
+    
     double currentTime = glfwGetTime();
     double delta = currentTime - lastTime;
     lastTime = currentTime;
     
-    int newparticles = (int)(delta*10000.0);
-    if (newparticles > (int)(0.016f*10000.0))
-        newparticles = (int)(0.016f*10000.0);
+    //int currentCameraInt = ;
+    //Camera *currentCam = ;
+    glm::vec3 CameraPosition = currentScene.cameras[currentScene.Scene::currentCamera]->center;
+    
+    int newparticles = (int)(delta*10.0);
+    if (newparticles > (int)(0.016f*10.0))
+        newparticles = (int)(0.016f*10.0);
     
     for(int i=0; i<newparticles; i++){
         int particleIndex = FindUnusedParticle();
@@ -65,7 +82,9 @@ void ParticleHandler::SimulationScript() {
         ParticlesContainer[particleIndex].b = rand() % 256;
         ParticlesContainer[particleIndex].a = (rand() % 256) / 3;
         
-        ParticlesContainer[particleIndex].size = (rand()%1000)/2000.0f + 0.1f;
+        float size = (rand()%1000)/2000.0f + 0.1f;
+        
+        ParticlesContainer[particleIndex].scale = glm::vec3(size, size, size);
         
     }
     
@@ -74,6 +93,7 @@ void ParticleHandler::SimulationScript() {
     for(int i=0; i<MaxParticles; i++){
         
         Particle& p = ParticlesContainer[i]; // shortcut
+        
         
         if(p.life > 0.0f){
             
@@ -85,19 +105,9 @@ void ParticleHandler::SimulationScript() {
                 p.speed += glm::vec3(0.0f,-9.81f, 0.0f) * (float)delta * 0.5f;
                 p.pos += p.speed * (float)delta;
                 p.cameradistance = glm::length2( p.pos - CameraPosition );
-                //ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
+                ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
                 
-                // Fill the GPU buffer
-                g_particule_position_size_data[4*ParticlesCount+0] = p.pos.x;
-                g_particule_position_size_data[4*ParticlesCount+1] = p.pos.y;
-                g_particule_position_size_data[4*ParticlesCount+2] = p.pos.z;
-                
-                g_particule_position_size_data[4*ParticlesCount+3] = p.size;
-                
-                g_particule_color_data[4*ParticlesCount+0] = p.r;
-                g_particule_color_data[4*ParticlesCount+1] = p.g;
-                g_particule_color_data[4*ParticlesCount+2] = p.b;
-                g_particule_color_data[4*ParticlesCount+3] = p.a;
+                //RENDER HERE
                 
             }else{
                 // Particles that just died will be put at the end of the buffer in SortParticles();
