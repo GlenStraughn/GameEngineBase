@@ -36,7 +36,45 @@ camera
 }
 
 
+node
+{
+    name "sunNew"
+    meshInstance
+    {
+        name "sunNew2"
+        mesh "sphereCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "Shining.fs"
+        texture uDiffuseTex "sun.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+    translate [-1.5, 0, 0]
+    scale [0.5 0.5 0.5]
 
+    physicsProperties
+    {
+        gravity "yes"
+        solid "yes"
+        body [0.85 0.85 0.85]
+        velocity [0 0 0]
+        restitution 1
+    }
+
+
+    script
+    {
+        type "controllerScript"
+    }
+
+    script
+    {
+        type "physicsScript"
+        floatArray gravity 3 [0 -0.001 0]
+    }
+}
 
 node
 {
@@ -60,9 +98,9 @@ node
     {
         gravity "yes"
         solid "yes"
-        body [0.5 0.5 0.5]
+        body [0.85 0.85 0.85]
         velocity [0 0 0]
-        restitution 0.1
+        restitution 1
     }
 
 
@@ -74,7 +112,7 @@ node
     script
     {
         type "physicsScript"
-        gravity [0 -1 0]
+        floatArray gravity 3 [-0.0001 -0.0001 0]
     }
 
     node

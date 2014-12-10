@@ -15,6 +15,7 @@ SceneNode::SceneNode()
     T.rotation = {0, 0, 0, 0};
     
     T.refreshTransform();
+    nodeType = NORMAL;
     
     parent = NULL;
 }

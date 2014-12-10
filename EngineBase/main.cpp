@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "generateScript.h"
 #include "Timer.hpp"
+#include "PhysicsEngine.h"
 
 //-------------------------------------------------------------------------//
 // Callback for Keyboard Input
@@ -188,7 +189,7 @@ void loadMeshInstance(FILE *F, Scene *scene, SceneNode &node)
 	GLuint shaderProgram = NULL_HANDLE;
 	TriMeshInstance *meshInstance = new TriMeshInstance();
 	node.addTriMeshInstance(*meshInstance);
-
+    
 	while (getToken(F, token, ONE_TOKENS)) {
 		if (token == "}") {
 			break;
