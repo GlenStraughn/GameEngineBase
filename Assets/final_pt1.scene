@@ -62,7 +62,7 @@ node
         solid "yes"
         body [0.5 0.5 0.5]
         velocity [0 0 0]
-        restitution 0.1
+        restitution 1
     }
 
 
@@ -74,7 +74,7 @@ node
     script
     {
         type "physicsScript"
-        gravity [0 -1 0]
+        floatArray gravity 3 [0, -.001, 0]
     }
 
     node

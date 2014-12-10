@@ -16,6 +16,8 @@ SceneNode::SceneNode()
     
     T.refreshTransform();
     
+    nodeType = NORMAL;
+    
     parent = NULL;
 }
 

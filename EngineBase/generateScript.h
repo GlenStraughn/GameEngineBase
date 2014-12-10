@@ -56,5 +56,9 @@ void loadSpecialCase(FILE* F, Scene* scene, Script &script)
         {
             script.setPointer( "nodeList", &scene->nodeList);
         }
+        case PARTICLE_HANDLER:
+        {
+            
+        }
     }
 }

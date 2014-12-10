@@ -63,8 +63,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Users/glenks/Desktop/Compiled/final_pt1.scene"
+            argument = "/Users/glenks/Desktop/Compiled/final_collisions.scene"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/glenks/Desktop/Compiled/final_pt1.scene"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/glenks/Desktop/Compiled/Sprite.scene"

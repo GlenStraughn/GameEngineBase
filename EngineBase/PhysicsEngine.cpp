@@ -51,8 +51,6 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         
         if(node->isAffectedByGravity())
         {
-            cout << "Adding gravity to " << node->getName() << endl;
-            
             speed.x += gravity.x;
             speed.y += gravity.y;
             speed.z += gravity.z;
@@ -76,11 +74,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         //World
         
         //X
-//        if (actualPos.x < -2) {
-//            //Collides with bottom layer
-//            actualPos.x = -2;
-//            speed.x *= -node->getRestitution();
-//        }
+        if (actualPos.x < -2) {
+            //Collides with bottom layer
+            actualPos.x = -2;
+            speed.x *= -node->getRestitution();
+        }
         
         //Y
         if (actualPos.y < -2) {
@@ -90,11 +88,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         }
         
         //Z
-//        if (actualPos.z < -2) {
-//            //Collides with bottom layer
-//            actualPos.z = -2;
-//            speed.z *= -node->getRestitution();
-//        }
+        if (actualPos.z < -2) {
+            //Collides with bottom layer
+            actualPos.z = -2;
+            speed.z *= -node->getRestitution();
+        }
         
         node->setSpeed(speed);
         
@@ -136,15 +134,18 @@ void PhysicsEngine::bounceNodes(SceneNode *node1, SceneNode *node2)
 }
 
 
-void PhysicsEngine::setEventManager(EventManager &newEventManager) {
+void PhysicsEngine::setEventManager(EventManager &newEventManager)
+{
     
 }
 
-void PhysicsEngine::setGravity(glm::vec3 &newGravity) {
+void PhysicsEngine::setGravity(glm::vec3 &newGravity)
+{
     gravity = newGravity;
 }
 
-glm::vec3 PhysicsEngine::getGravity() {
+glm::vec3 PhysicsEngine::getGravity()
+{
     return gravity;
 }
 
