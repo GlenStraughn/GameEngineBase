@@ -18,10 +18,6 @@
 #include "Particle.h"
 #include "Scene.h"
 
-//class Particle;
-
-
-
 class ParticleHandler
 {
 public:
@@ -30,6 +26,7 @@ public:
     void SimulationScript();
     void addMeshInstance(mInstance mesh);
     void setMeshes();
+    void sendToOpenGL();
     
 private:
     static const int MaxParticles = 500;

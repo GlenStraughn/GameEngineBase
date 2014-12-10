@@ -9,7 +9,7 @@
 #include "ParticleHandler.h"
 
 extern Scene gScene;
-const Scene currentScene = gScene;
+//const Scene currentScene = gScene;
 
 void ParticleHandler::addMeshInstance(mInstance newMesh){
     mInstances.push_back(newMesh);
@@ -43,15 +43,24 @@ void ParticleHandler::setMeshes() {
         ParticlesContainer[i].meshI = mInstances[0];
 }
 
+void ParticleHandler::sendToOpenGL() {
+    for(int i = 0; i < MaxParticles; ++i) {
+        GLuint vertexShader = loadShader(ParticlesContainer[i].meshI.vertexShader, GL_VERTEX_SHADER);
+        GLuint fragmentShader = loadShader(ParticlesContainer[i].meshI.fragmentShader, GL_FRAGMENT_SHADER);
+        for (const auto& kv : ParticlesContainer[i].meshI.textures) {
+            
+            std::cout << kv.first << " has value " << kv.second << std::endl;
+        }
+    }
+}
+
 void ParticleHandler::SimulationScript() {
     
     double currentTime = glfwGetTime();
     double delta = currentTime - lastTime;
     lastTime = currentTime;
     
-    //int currentCameraInt = ;
-    //Camera *currentCam = ;
-    glm::vec3 CameraPosition = currentScene.cameras[currentScene.Scene::currentCamera]->center;
+    glm::vec3 CameraPosition = gScene.cameras[gScene.Scene::currentCamera]->center;
     
     int newparticles = (int)(delta*10.0);
     if (newparticles > (int)(0.016f*10.0))
@@ -106,10 +115,8 @@ void ParticleHandler::SimulationScript() {
                 p.pos += p.speed * (float)delta;
                 p.cameradistance = glm::length2( p.pos - CameraPosition );
                 ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
-                
-                //RENDER HERE
-                
-            }else{
+            }
+            else{
                 // Particles that just died will be put at the end of the buffer in SortParticles();
                 p.cameradistance = -1.0f;
             }
