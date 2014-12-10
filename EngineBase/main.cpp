@@ -458,6 +458,10 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             {
                 loadScript(F, scene, *newNode);
             }
+            else if (token == "physics")
+            {
+                loadPhysicsProperties(F, scene, *newNode);
+            }
         }
     }
     
@@ -637,7 +641,7 @@ int main(int numArgs, char **args)
 
 
 
-void loadPysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
+void loadPhysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
 {
     string token;
     while (getToken(F, token, ONE_TOKENS))
