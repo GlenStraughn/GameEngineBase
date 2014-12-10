@@ -27,6 +27,8 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	}
 }
 
+void loadPhysicsProperties(FILE* F, Scene* scene, SceneNode &sNode);
+
 //-------------------------------------------------------------------------//
 // Global State. 
 //-------------------------------------------------------------------------//
@@ -634,3 +636,67 @@ int main(int numArgs, char **args)
 //-------------------------------------------------------------------------//
 
 
+
+void loadPysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
+{
+    string token;
+    while (getToken(F, token, ONE_TOKENS))
+    {
+        if (token == "}")
+        {
+            break;
+        }
+        else if(token == "gravity" || token == "affectedByGravity")
+        {
+            string answer;
+            
+            getToken(F, answer, ONE_TOKENS);
+            
+            if(answer == "true" || answer == "yes")
+            {
+                sNode.toggleGravity(true);
+            }
+            else
+            {
+                sNode.toggleGravity(false);
+            }
+        }
+        else if(token == "velocity")
+        {
+            glm::vec3 velocity;
+            
+            getFloats(F, &velocity[0], 3);
+            
+            sNode.setSpeed(velocity);
+        }
+        else if(token == "solid")
+        {
+            string answer;
+            
+            getToken(F, answer, ONE_TOKENS);
+            
+            if(answer == "true" || answer == "yes")
+            {
+                sNode.toggleSolid(true);
+            }
+            else
+            {
+                sNode.toggleSolid(false);
+            }
+        }
+        else if(token == "restitution")
+        {
+            float res;
+            getFloats(F, &res, 1);
+            
+            sNode.setRestitution(res);
+        }
+        else if(token == "body")
+        {
+            float array[3];
+            
+            getFloats(F, array, 3);
+            sNode.setBody(array);
+        }
+    }
+}

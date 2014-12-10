@@ -147,12 +147,12 @@ void ControllerScript::run()
     
     if(controller.isButtonPressed(LOOK_UP))
     {
-        camera->rotateGlobal(glm::vec3(1,0,0), rotationSpeed);
+        camera->rotateLocal(glm::vec3(1,0,0), rotationSpeed);
     }
     
     if(controller.isButtonPressed(LOOK_DOWN))
     {
-        camera->rotateGlobal(glm::vec3(1,0,0), -rotationSpeed);
+        camera->rotateLocal(glm::vec3(1,0,0), -rotationSpeed);
     }
     
     
