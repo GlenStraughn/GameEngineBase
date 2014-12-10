@@ -50,7 +50,7 @@ public:
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
     Transform* getTransform() { return &T; }
     
-    void setTransform (Transform t) { T = t; T.refreshTransform(); }
+    void setTransform (Transform t);
     Transform getCopyTransform() { return T; }
     
     void setSpeed(glm::vec3 &newSpeed) { speed = newSpeed; }

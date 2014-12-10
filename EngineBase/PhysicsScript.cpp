@@ -25,13 +25,18 @@ void PhysicsScript::PhysicsScript::run()
     {
         node1 = i->second;
         
-        for(j = i; j != nodeMap->end(); ++j)
+        j = i;
+        j++;
+        for(; j != nodeMap->end(); j++)
         {
             node2 = j->second;
             
             if(node1->getType() == LASER && node2->getType() == NORMAL)
             {
-                
+                if(engine.checkCollision(node1, node2))
+                {
+                    
+                }
             }
             else if(node1->getType() == NORMAL && node2->getType() == NORMAL)
             {

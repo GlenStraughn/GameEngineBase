@@ -123,13 +123,13 @@ void ControllerScript::run()
     
     if(controller.isButtonPressed(STRAFE_LEFT))
     {
-        glm::vec3 transVec(translationSpeed, 0, 0);
+        glm::vec3 transVec(-translationSpeed, 0, 0);
         camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(STRAFE_RIGHT))
     {
-        glm::vec3 transVec(-translationSpeed, 0, 0);
+        glm::vec3 transVec(translationSpeed, 0, 0);
         camera->translateLocal(transVec);
     }
     

@@ -458,6 +458,10 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             {
                 loadScript(F, scene, *newNode);
             }
+            else if(token == "physics" || token == "physicsProperties")
+            {
+                loadPhysicsProperties(F, scene, *newNode);
+            }
         }
     }
     
@@ -620,6 +624,11 @@ int main(int numArgs, char **args)
             //SLEEP(10); // sleep 1 millisecond to avoid busy waiting
             glfwSwapBuffers(gWindow);
             
+            Camera* c = gScene.cameras[gScene.currentCamera];
+            
+            printVec(c->eye);
+            cout << endl;
+            
             renderTimer.resetCycle();
         }
 	}
@@ -637,7 +646,7 @@ int main(int numArgs, char **args)
 
 
 
-void loadPysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
+void loadPhysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
 {
     string token;
     while (getToken(F, token, ONE_TOKENS))

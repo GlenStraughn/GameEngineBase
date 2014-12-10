@@ -176,3 +176,9 @@ void SceneNode::setBody(float bodyTemp[3]) {
 void SceneNode::setRestitution (float res) {
     restitution = res;
 }
+
+void SceneNode::setTransform(Transform t)
+{
+    T = t;
+    T.refreshTransform();
+}

@@ -30,9 +30,12 @@ bool PhysicsEngine::checkCollision(SceneNode *node1, SceneNode *node2) {
     return false;
 }
 
-void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList) {
+void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
+{
     typedef map<string, SceneNode*>::iterator it_type;
-    for(it_type iterator = nodeList.begin(); iterator != nodeList.end(); iterator++) {
+    
+    for(it_type iterator = nodeList.begin(); iterator != nodeList.end(); iterator++)
+    {
         // iterator->first = key
         // iterator->second = value
         // Repeat if you also want to iterate through the second map.
@@ -48,6 +51,8 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList) {
         
         if(node->isAffectedByGravity())
         {
+            cout << "Adding gravity to " << node->getName() << endl;
+            
             speed.x += gravity.x;
             speed.y += gravity.y;
             speed.z += gravity.z;
@@ -66,16 +71,16 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList) {
         actualPos.y += speed.y;
         actualPos.z += speed.z;
         
-        //Check new position for posible colition with Wall
+        //Check new position for posible collision with Wall
         
         //World
         
         //X
-        if (actualPos.x < -2) {
-            //Collides with bottom layer
-            actualPos.x = -2;
-            speed.x *= -node->getRestitution();
-        }
+//        if (actualPos.x < -2) {
+//            //Collides with bottom layer
+//            actualPos.x = -2;
+//            speed.x *= -node->getRestitution();
+//        }
         
         //Y
         if (actualPos.y < -2) {
@@ -85,11 +90,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList) {
         }
         
         //Z
-        if (actualPos.z < -2) {
-            //Collides with bottom layer
-            actualPos.z = -2;
-            speed.z *= -node->getRestitution();
-        }
+//        if (actualPos.z < -2) {
+//            //Collides with bottom layer
+//            actualPos.z = -2;
+//            speed.z *= -node->getRestitution();
+//        }
         
         node->setSpeed(speed);
         

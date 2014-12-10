@@ -60,6 +60,10 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "/Users/glenks/Desktop/Compiled/Sprint_2.scene"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/glenks/Desktop/Compiled/final_pt1.scene"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
