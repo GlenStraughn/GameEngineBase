@@ -175,7 +175,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "343"
             endingLineNumber = "343"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -191,7 +191,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "342"
             endingLineNumber = "342"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,7 +207,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "341"
             endingLineNumber = "341"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +223,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "344"
             endingLineNumber = "344"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -241,22 +241,6 @@
             endingLineNumber = "30"
             landmarkName = "OrbitScript::run()"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EngineBase/generateScript.h"
-            timestampString = "439874070.594586"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "generateScript(string &amp;scriptName)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -333,7 +317,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "348"
             endingLineNumber = "348"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -349,7 +333,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "356"
             endingLineNumber = "356"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -523,7 +507,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "332"
             endingLineNumber = "332"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -539,7 +523,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "333"
             endingLineNumber = "333"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -555,6 +539,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "331"
             endingLineNumber = "331"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EngineBase/main.cpp"
+            timestampString = "439962253.884143"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
             landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
             landmarkType = "7">
          </BreakpointContent>
@@ -566,28 +566,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EngineBase/main.cpp"
-            timestampString = "439875874.424145"
+            timestampString = "439962253.884143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
-            landmarkName = "loadSceneNode(FILE* F, Scene* scene, SceneNode &amp;node)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EngineBase/main.cpp"
-            timestampString = "439875874.424145"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
-            landmarkName = "loadSceneNode(FILE* F, Scene* scene, SceneNode &amp;node)"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -603,7 +587,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "340"
             endingLineNumber = "340"
-            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -998,11 +982,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EngineBase/generateScript.h"
-            timestampString = "439874219.694704"
+            timestampString = "439962694.838316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "loadSpecialCase(FILE* F, Scene* scene, Script &amp;script)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1030,12 +1014,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EngineBase/main.cpp"
-            timestampString = "439942528.223465"
+            timestampString = "439962253.884143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
-            landmarkName = "loadPhysicsProperties(FILE* F, Scene* scene, SceneNode &amp;sNode)"
+            startingLineNumber = "650"
+            endingLineNumber = "650"
+            landmarkName = "update(void)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1046,12 +1030,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EngineBase/main.cpp"
-            timestampString = "439940308.002528"
+            timestampString = "439962253.884143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
-            landmarkName = "loadSceneNode(FILE* F, Scene* scene, SceneNode &amp;node)"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
+            landmarkName = "loadScript(FILE* F, Scene* scene, SceneNode &amp;node)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1062,12 +1046,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EngineBase/main.cpp"
-            timestampString = "439940319.500205"
+            timestampString = "439962253.884143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
-            landmarkName = "loadSceneNode(FILE* F, Scene* scene, SceneNode &amp;node)"
+            startingLineNumber = "432"
+            endingLineNumber = "432"
+            landmarkName = "loadParticleHandler(FILE* F, Scene* scene, SceneNode &amp;node, Script *script)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1180,6 +1164,22 @@
             startingLineNumber = "144"
             endingLineNumber = "144"
             landmarkName = "PhysicsEngine::setGravity(glm::vec3 &amp;newGravity)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EngineBase/Script.cpp"
+            timestampString = "439962350.594477"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "Script::setSceneNode(SceneNode *sNode)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

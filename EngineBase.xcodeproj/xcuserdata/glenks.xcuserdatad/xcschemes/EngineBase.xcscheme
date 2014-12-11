@@ -64,6 +64,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/Users/glenks/Desktop/Compiled/final_collisions.scene"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/Users/glenks/Desktop/Compiled/final_particles.scene"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

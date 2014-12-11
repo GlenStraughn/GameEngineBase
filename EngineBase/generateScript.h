@@ -12,6 +12,7 @@
 #include "OrbitScript.hpp"
 #include "ControllerScript.h"
 #include "PhysicsScript.h"
+#include "ParticleScript.h"
 #include <string>
 
 Script* generateScript(string &scriptName)
@@ -26,7 +27,7 @@ Script* generateScript(string &scriptName)
     }
     else if(scriptName == "particleScript" || scriptName == "particleHandlerScript")
     {
-        // return new ParticleScript;
+        return new ParticleScript;
     }
     else if(scriptName == "physicsScript")
     {
@@ -56,7 +57,7 @@ void loadSpecialCase(FILE* F, Scene* scene, Script &script)
         {
             script.setPointer( "nodeList", &scene->nodeList);
         }
-        case PARTICLE_HANDLER:
+        case PARTICLE:
         {
             
         }

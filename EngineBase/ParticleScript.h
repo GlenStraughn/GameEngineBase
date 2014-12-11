@@ -8,7 +8,7 @@
 
 #pragma once
 
-//#include "ParticleHandler.h"
+#include "ParticleHandler.h"
 #include "Script.h"
 
 
@@ -19,12 +19,13 @@ public:
     
     virtual void run();
     
-    virtual void setFloatValue(string variableName, float value);
+ //   virtual void setFloatValue(string variableName, float value);
     
-    virtual float getFloatAttribute(string variableName);
-    virtual string getStringAttribute(string variableName) {};
+    virtual float getFloatAttribute(string variableName){return 0;};
+    virtual string getStringAttribute(string variableName) {return "";};
     
-    virtual void setPointer(string pointerName, void* pointer){};
+    virtual void setPointer(string pointerName, void* pointer);
     
 private:
+    ParticleHandler* handler;
 };

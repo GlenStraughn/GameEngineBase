@@ -325,7 +325,7 @@ void loadLight(FILE *F, Scene *scene)
 	}
 }
 
-void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node)
+void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node, Script *script)
 {
     //string token;
     
@@ -362,6 +362,7 @@ void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node)
     
     newParticleHandler->SimulationScript();
     
+    script->setPointer("particleHandler", newParticleHandler);
     
 //    string token;
 //    GLuint vertexShader = NULL_HANDLE;
@@ -527,6 +528,10 @@ void loadScript(FILE* F, Scene* scene, SceneNode &node)
                 newScript->setStringArray(variableName, newArray);
             }
         }
+        else if(token == "particleHandler")
+        {
+            loadParticleHandler(F, scene, node, newScript);
+        }
         
     }
     
@@ -582,8 +587,6 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             else if(token == "physics" || token == "physicsProperties")
             {
                 loadPhysicsProperties(F, scene, *newNode);
-            else if(token == "particleHandler") {
-                loadParticleHandler(F, scene, *newNode);
             }
         }
     }
@@ -627,9 +630,6 @@ void loadScene(const char *sceneFile, Scene *scene)
 		else if (token == "light") {
 			loadLight(F, scene);
 		}
-        else if (token == "particleHandler") {
-            loadParticleHandler(F, scene, scene->root);
-        }
         else if (token == "node" || token == "sceneNode")
         {
             loadSceneNode(F, scene, scene->root);
