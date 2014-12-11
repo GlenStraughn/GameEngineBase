@@ -1,0 +1,203 @@
+
+worldSettings
+{
+	windowTitle "Final"
+	width 1200
+	height 900
+	spp 16
+}
+
+sceneSettings
+{
+	backgroundColor [0 0 0]
+	#backgroundMusic "ifILoseMyself.mp3"
+}
+
+camera
+{
+	name "camera1"
+	eye [0 4 20]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 2000
+}
+
+camera
+{
+	name "camera2"
+	eye [0 6 -10]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+
+node
+{
+    name "sunNew"
+    meshInstance
+    {
+        name "sunNew2"
+        mesh "sphereCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "Shining.fs"
+        texture uDiffuseTex "sun.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+    translate [-1.5, 0, 0]
+    scale [0.5 0.5 0.5]
+
+    physicsProperties
+    {
+        gravity "yes"
+        solid "yes"
+        body [0.7 0.85 0.85]
+        velocity [-0.05 0 0]
+        restitution 0.9
+    }
+
+}
+
+
+node
+{
+    name scriptNode
+
+    script
+    {
+        type "controllerScript"
+    }
+
+    script
+    {
+        type "physicsScript"
+        floatArray gravity 3 [0 0 0]
+    }
+
+    physicsProperties
+    {
+        gravity "no"
+        solid "no"
+        body [0 0 0]
+        velocity [0 0 0]
+        restitution 1
+    }
+}
+
+node
+{
+    name "floor"
+
+    meshInstance
+    {
+        name "sun1"
+        mesh "cubeCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "phongShading.fs"
+        texture uDiffuseTex "hex.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+
+    translate [0, -2, 0]
+    scale [4 0.2 4]
+
+    physicsProperties
+    {
+        gravity no
+        solid yes
+        body [6 0.55 6]
+        velocity [0 0 0]
+        restitution -1
+    }
+}
+
+node
+{
+    name "floor2"
+
+    meshInstance
+    {
+        name "sun1"
+        mesh "cubeCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "phongShading.fs"
+        texture uDiffuseTex "hex.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+
+    translate [-4, 0, 0]
+    scale [0.2 4 4]
+
+    physicsProperties
+    {
+        gravity no
+        solid yes
+        body [0.55 6 6]
+        velocity [0 0 0]
+        restitution -1
+    }
+}
+
+
+node
+{
+    name "sun"
+    meshInstance
+    {
+        name "sun1"
+        mesh "sphereCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "Shining.fs"
+        texture uDiffuseTex "sun.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+    translate [0, 0, 0]
+    scale [0.5 0.5 0.5]
+
+
+    physicsProperties
+    {
+        gravity "yes"
+        solid "yes"
+        body [0.7 0.85 0.85]
+        velocity [0 0 0]
+        restitution 0.9
+    }
+}
+
+
+
+light
+{
+	type "point"
+	location [0 0 0]
+	color [5 5 5]
+    attenuation [1 0 1]
+}
+
+
+light
+{
+	type "ambient"
+	position [0 5 0]
+	color [0.2 0.2 0.2]
+	direction [0 -1 0]
+	attenuation [1 0 1]
+	coneAngles [0.39 0.4]
+}
