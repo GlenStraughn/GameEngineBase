@@ -13,6 +13,7 @@
 #include <string>
 #include "SceneNode.h"
 #include "Events.h"
+//#include "ParticleHandler.h"
 
 using namespace std;
 
@@ -43,4 +44,7 @@ public:
         // Sort in reverse order : far particles drawn first.
         return this->cameradistance > that.cameradistance;
     }
+    
+private:
+   // ParticleHandler* particleHandler;
 };

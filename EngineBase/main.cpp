@@ -579,6 +579,9 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             {
                 loadScript(F, scene, *newNode);
             }
+            else if(token == "physics" || token == "physicsProperties")
+            {
+                loadPhysicsProperties(F, scene, *newNode);
             else if(token == "particleHandler") {
                 loadParticleHandler(F, scene, *newNode);
             }
