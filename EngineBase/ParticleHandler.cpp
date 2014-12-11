@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 dave. All rights reserved.
 //
 
+#include "Particle.h"
 #include "ParticleHandler.h"
 
 extern Scene gScene;

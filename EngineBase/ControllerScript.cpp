@@ -123,13 +123,13 @@ void ControllerScript::run()
     
     if(controller.isButtonPressed(STRAFE_LEFT))
     {
-        glm::vec3 transVec(translationSpeed, 0, 0);
+        glm::vec3 transVec(-translationSpeed, 0, 0);
         camera->translateLocal(transVec);
     }
     
     if(controller.isButtonPressed(STRAFE_RIGHT))
     {
-        glm::vec3 transVec(-translationSpeed, 0, 0);
+        glm::vec3 transVec(translationSpeed, 0, 0);
         camera->translateLocal(transVec);
     }
     
@@ -147,12 +147,12 @@ void ControllerScript::run()
     
     if(controller.isButtonPressed(LOOK_UP))
     {
-        camera->rotateGlobal(glm::vec3(1,0,0), rotationSpeed);
+        camera->rotateLocal(glm::vec3(1,0,0), rotationSpeed);
     }
     
     if(controller.isButtonPressed(LOOK_DOWN))
     {
-        camera->rotateGlobal(glm::vec3(1,0,0), -rotationSpeed);
+        camera->rotateLocal(glm::vec3(1,0,0), -rotationSpeed);
     }
     
     

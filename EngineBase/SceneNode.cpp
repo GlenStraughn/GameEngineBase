@@ -16,6 +16,9 @@ SceneNode::SceneNode()
     
     T.refreshTransform();
     
+    nodeType = NORMAL;
+    
+    meshInstance = NULL;
     parent = NULL;
 }
 
@@ -152,15 +155,8 @@ SceneNode* SceneNode::getNodeReference(string &nodeName)
             return np;
         }
     }
-
+    
     return NULL;
-}
-
-void SceneNode::setBody(float bodyTemp[3]) {
-    body[0] = bodyTemp[0];
-    body[1] = bodyTemp[1];
-    body[2] = bodyTemp[2];
-    solid = true;
 }
 
 
@@ -171,6 +167,21 @@ void SceneNode::addDescendant(string &childName, SceneNode &nodeToAdd)
     p_node->addChild(&nodeToAdd);
 }
 
+
+void SceneNode::setBody(float bodyTemp[3]) {
+    body[0] = bodyTemp[0];
+    body[1] = bodyTemp[1];
+    body[2] = bodyTemp[2];
+    solid = true;
+}
+
+
 void SceneNode::setRestitution (float res) {
     restitution = res;
+}
+
+void SceneNode::setTransform(Transform t)
+{
+    T = t;
+    T.refreshTransform();
 }

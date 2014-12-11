@@ -11,6 +11,7 @@
 #include "Script.h"
 #include "OrbitScript.hpp"
 #include "ControllerScript.h"
+#include "PhysicsScript.h"
 #include <string>
 
 Script* generateScript(string &scriptName)
@@ -23,10 +24,16 @@ Script* generateScript(string &scriptName)
     {
         return new ControllerScript;
     }
-    else
+    else if(scriptName == "particleScript" || scriptName == "particleHandlerScript")
     {
-        return NULL;
+        // return new ParticleScript;
     }
+    else if(scriptName == "physicsScript")
+    {
+        return new PhysicsScript;
+    }
+    
+    return NULL;
 }
 
 extern GLFWwindow* gWindow;
@@ -44,6 +51,14 @@ void loadSpecialCase(FILE* F, Scene* scene, Script &script)
             script.setFloatValue("screenHeight", gHeight);
             script.setFloatValue("screenWidth", gWidth);
             break;
+        }
+        case PHYSICS:
+        {
+            script.setPointer( "nodeList", &scene->nodeList);
+        }
+        case PARTICLE_HANDLER:
+        {
+            
         }
     }
 }

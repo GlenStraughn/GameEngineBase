@@ -1,0 +1,220 @@
+
+worldSettings
+{
+	windowTitle "Sprint 2"
+	width 1200
+	height 900
+	spp 16
+}
+
+sceneSettings
+{
+	backgroundColor [0 0 0]
+	#backgroundMusic "ifILoseMyself.mp3"
+}
+
+camera
+{
+	name "camera1"
+	eye [0 4 7.5]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+camera
+{
+	name "camera2"
+	eye [0 6 -10]
+	center [0 0 0]
+	vup [0 1 0]
+	fovy 0.5
+	znear 0.1
+	zfar 1000
+}
+
+
+
+
+node
+{
+    name "sun"
+    meshInstance
+    {
+        name "sun1"
+        mesh "sphereCenter.ply"
+        scale [1 1 1]
+        translate [0, 0, 0]
+        vertexShader "basicVertexShader.vs"
+        fragmentShader "Shining.fs"
+        texture uDiffuseTex "sun.png"
+        texture uOtherTex "asteroids.png"
+        type mesh
+    }
+    translate [0, 0, 0]
+    scale [0.5 0.5 0.5]
+
+    physicsProperties
+    {
+        gravity "yes"
+        solid "yes"
+        body [0.5 0.5 0.5]
+        velocity [0 0 0]
+        restitution 1
+    }
+
+
+    script
+    {
+        type "controllerScript"
+    }
+
+    script
+    {
+        type "physicsScript"
+        floatArray gravity 3 [0, -.001, 0]
+    }
+
+    node
+    {
+        name "cubePlanet"
+        meshInstance
+        {
+            name "cubePlanet1"
+            mesh "cubeCenter.ply"
+            scale [1 1 1]
+            translate [0, 0, 0]
+            vertexShader "basicVertexShader.vs"
+            fragmentShader "phongShading.fs"
+            texture uDiffuseTex "hex.png"
+            texture uOtherTex "hex.png"
+            type mesh
+        }
+        translate [2, 0, 0]
+        scale [0.25 0.25 0.25]
+
+
+        node
+        {
+            name "cubeMoon"
+            meshInstance
+            {
+                name "asteroids1"
+                mesh "square.ply"
+                scale [1 1 1]
+                translate [0, 0, 0]
+                vertexShader "basicVertexShader.vs"
+                fragmentShader "spriteShading.fs"
+                texture uDiffuseTex "asteroids.png"
+                texture uOtherTex "asteroids.png"
+                type sprite
+            }
+            translate [4, 0, 0]
+            scale [0.25 0.25 0.25]
+
+
+        }
+    }
+    
+    node
+    {   
+        name "cylinderPlanet"
+        meshInstance
+        {
+            name "cylinderPlanet1"
+            mesh "cylinderCenter.ply"
+            scale [1 1 1]
+            translate [0, 0, 0]
+            vertexShader "basicVertexShader.vs"
+            fragmentShader "phongShading.fs"
+            texture uDiffuseTex "specular.png"
+            texture uOtherTex "hex.png"
+            type mesh
+        }
+        translate [2, 0, 0]
+        scale [0.3 0.25 0.3]
+    }
+    
+
+    node
+    {
+        name "sphericalPlanet"
+        meshInstance
+        {
+            name "spherePlanet1"
+            mesh "sphereCenter.ply"
+            scale [1 1 1]
+            translate [0, 0, 0]
+            vertexShader "basicVertexShader.vs"
+            fragmentShader "phongShading.fs"
+            texture uDiffuseTex "specular.png"
+            texture uOtherTex "hex.png"
+            type mesh
+        }
+
+        translate [2, 0, 0]
+        scale [0.15 0.15 0.15]
+
+        node
+        {
+            name "sphereMoon1"
+            meshInstance
+            {
+                name "asteroids1"
+                mesh "square.ply"
+                scale [1 1 1]
+                translate [0, 0, 0]
+                vertexShader "basicVertexShader.vs"
+                fragmentShader "spriteShading.fs"
+                texture uDiffuseTex "asteroids.png"
+                texture uOtherTex "asteroids.png"
+                type sprite
+            }
+            translate [4, 0, 0]
+            scale [0.5 0.5 0.5]
+
+        }
+        
+        node
+        {
+            name "sphereMoon2"
+            meshInstance
+            {
+                name "asteroids1"
+                mesh "square.ply"
+                scale [1 1 1]
+                translate [0, 0, 0]
+                vertexShader "basicVertexShader.vs"
+                fragmentShader "spriteShading.fs"
+                texture uDiffuseTex "asteroids.png"
+                texture uOtherTex "asteroids.png"
+                type sprite
+            }
+            translate [4, 0, 0]
+            scale [0.5 0.5 0.5]
+        }
+    }
+}
+
+
+
+light
+{
+	type "point"
+	location [0 0 0]
+	color [5 5 5]
+    attenuation [1 0 1]
+}
+
+
+light
+{
+	type "ambient"
+	position [0 5 0]
+	color [0.2 0.2 0.2]
+	direction [0 -1 0]
+	attenuation [1 0 1]
+	coneAngles [0.39 0.4]
+}

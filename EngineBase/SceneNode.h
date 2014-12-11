@@ -13,12 +13,15 @@
 
 class Script;
 
+enum NodeType {UNLISTED = -1, NORMAL, LASER};
+
 class SceneNode
 {
     friend class Script;
 public:
     SceneNode();
     ~SceneNode();
+    
     
     void setParent(SceneNode &newParent);
     SceneNode* getParent(){ return parent; }
@@ -47,22 +50,39 @@ public:
 	void setTranslation(const glm::vec3 &t) { T.translation = t; }
     Transform* getTransform() { return &T; }
     
-    void setVelocity(glm::vec3 &newVelocity) { velocity = newVelocity; }
+    void setTransform (Transform t);
+    Transform getCopyTransform() { return T; }
+    
+    void setSpeed(glm::vec3 &newSpeed) { speed = newSpeed; }
+    glm::vec3 getSpeed() { return speed; }
+    
+    void setForce(glm::vec3 newForce) { force = newForce; }
+    glm::vec3 getForce() { return force; }
     
     void updatePosition();
-    Transform T;
     
     SceneNode* getNodeReference(string &nodeName);
-    float body[3]; //x,y,z
-    glm::vec3 velocity; // Velocity vector
-    glm::vec3 speed; // Velocity vector
-    glm::vec3 force; // Velocity vector
-    bool solid; // Whether or not the object can interact with other entities
-    float restitution;
-    void setBody(float bodyTemp[3]);
-    void setRestitution (float res);
     
     void addDescendant(string &childName, SceneNode &nodeToAdd);
+    
+    void setBody(float bodyTemp[3]);
+    float getBody(int dimension) { return body[dimension]; }
+    
+    void setRestitution (float res);
+    float getRestitution() {return restitution;}
+    
+    bool isSolid() {return solid;};
+    void toggleSolid() { solid = !solid;}
+    void toggleSolid(bool setting) {solid = setting;}
+    
+    bool isAffectedByGravity() { return gravity; }
+    void toggleGravity() { gravity = !gravity; }
+    void toggleGravity(bool setting) {gravity = setting;}
+    
+    NodeType getType() {return nodeType;}
+    
+    bool isMobile() {return mobile;}
+    void setMobility(bool setting) {mobile = setting;}
     
 protected:
     vector<SceneNode*> children;
@@ -70,14 +90,23 @@ protected:
     
     string nameID;
     
+    Transform T;
     
     SceneNode* parent;
     
     vector<Script*> nodeScripts;
     
+    NodeType nodeType;
+    
 // PHYSICS STUFF
     
+    float body[3]; //x,y,z
     
+    glm::vec3 speed; // Velocity vector
+    glm::vec3 force; // Velocity vector
+    bool solid; // Whether or not the object can interact with other entities
+    bool gravity;  // True = affected by gravity / false = floats in air
+    float restitution;
     
-    
+    bool mobile;
 };

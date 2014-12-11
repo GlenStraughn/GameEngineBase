@@ -28,6 +28,8 @@ public:
     
     glm::vec3 getGravity();
     
+    void bounceNodes(SceneNode* node1, SceneNode* node2);  // Bounces nodes off of each other
+    
     
 private:
     EventManager* eventManager;
