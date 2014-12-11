@@ -116,60 +116,60 @@ void PhysicsEngine::bounceNodes(SceneNode *node1, SceneNode *node2)
     //Should check performance
     Transform T1 = node1->getCopyTransform();
     Transform T2 = node2->getCopyTransform();
-//    
-//    if (T1.translation.x + node1->getBody(0)/2 > T2.translation.x)
-//    {
-        glm::vec3 speed1 = node1->getSpeed();
-        glm::vec3 speed2 = node2->getSpeed();
-        
-        speed1.x *= node1->getRestitution() * -1;
-        node1->setSpeed(speed1);
-        
-        speed2.y *= -node2->getRestitution();
-        node2->setSpeed(speed2);
+
+    glm::vec3 speed1 = node1->getSpeed();
+    glm::vec3 speed2 = node2->getSpeed();
     
-    if (T1.translation.x + node1->getBody(0)/2 > T2.translation.x - node2->getBody(0)/2 && node1->getRestitution() > 0) {
-        T1.translation.x = T2.translation.x+node2->getBody(1)/2+node1->getBody(0)/2;
-    }
-    if (T1.translation.x - node1->getBody(0)/2 < T2.translation.x + node2->getBody(0)/2 && node2->getRestitution() > 0) {
-        T2.translation.x = T1.translation.x+node1->getBody(0)/2+node2->getBody(0)/2;
-    }
+    
+//    if (fabs(fabs(T1.translation.x) - fabs(T2.translation.x)) < node1->getBody(0)/2 + node2->getBody(0)/2) {
+    
+        speed1.x *= -node1->getRestitution();
+        speed2.x *= -node2->getRestitution();
 //    }
-    
-//    if (T1.translation.y + node1->getBody(1)/2 > T2.translation.y -  node2->getBody(1)/2)
-//    {
-        
+//
+//        if (T1.translation.x + node1->getBody(0)/2 > T2.translation.x - node2->getBody(0)/2 && node1->getRestitution() > 0) {
+//            T1.translation.x = T2.translation.x+node2->getBody(1)/2+node1->getBody(0)/2;
+//        }
+//        if (T1.translation.x - node1->getBody(0)/2 < T2.translation.x + node2->getBody(0)/2 && node2->getRestitution() > 0) {
+//            T2.translation.x = T1.translation.x+node1->getBody(0)/2+node2->getBody(0)/2;
+//        }
+//
         speed1.y *= -node1->getRestitution();
-        node1->setSpeed(speed1);
-        
         speed2.y *= -node2->getRestitution();
-        node2->setSpeed(speed2);
-        
-        if (T1.translation.y + node1->getBody(1)/2 > T2.translation.y - node2->getBody(1)/2 && node1->getRestitution() > 0) {
-            T1.translation.y = T2.translation.y+node2->getBody(1)/2+node1->getBody(1)/2;
-        }
-        if (T1.translation.y - node1->getBody(1)/2 < T2.translation.y + node2->getBody(1)/2 && node2->getRestitution() > 0) {
-            T2.translation.y = T1.translation.y+node1->getBody(1)/2+node2->getBody(1)/2;
-        }
+//    
+//    if (fabs(fabs(T1.translation.y) - fabs(T2.translation.y)) < node1->getBody(1)/2 + node2->getBody(1)/2) {
+//        if (T1.translation.y + node1->getBody(1)/2 > T2.translation.y - node2->getBody(1)/2 && node1->getRestitution() > 0) {
+//            T1.translation.y = T2.translation.y+node2->getBody(1)/2+node1->getBody(1)/2;
+//        }
+//        if (T1.translation.y - node1->getBody(1)/2 < T2.translation.y + node2->getBody(1)/2 && node2->getRestitution() > 0) {
+//            T2.translation.y = T1.translation.y+node1->getBody(1)/2+node2->getBody(1)/2;
+//        }
 //    }
     
+//
     
     speed1.z *= -node1->getRestitution();
     node1->setSpeed(speed1);
     
     speed2.z *= -node2->getRestitution();
     node2->setSpeed(speed2);
-    
-    if (T1.translation.z + node1->getBody(2)/2 > T2.translation.z - node2->getBody(2)/2 && node1->getRestitution() > 0) {
-        T1.translation.z = T2.translation.z+node2->getBody(2)/2+node1->getBody(2)/2;
-    }
-    if (T1.translation.z - node1->getBody(2)/2 < T2.translation.z + node2->getBody(2)/2 && node2->getRestitution() > 0) {
-        T2.translation.z = T1.translation.z+node1->getBody(2)/2+node2->getBody(2)/2;
-    }
+//
+//    if (T1.translation.z + node1->getBody(2)/2 > T2.translation.z - node2->getBody(2)/2 && node1->getRestitution() > 0) {
+//        T1.translation.z = T2.translation.z+node2->getBody(2)/2+node1->getBody(2)/2;
+//    }
+//    if (T1.translation.z - node1->getBody(2)/2 < T2.translation.z + node2->getBody(2)/2 && node2->getRestitution() > 0) {
+//        T2.translation.z = T1.translation.z+node1->getBody(2)/2+node2->getBody(2)/2;
+//    }
     if (node1->getRestitution() > 0) {
+        T1.translation.x += speed1.x;
+        T1.translation.y += speed1.y;
+        T1.translation.z += speed1.z;
         node1->setTransform(T1);
     }
     if (node2->getRestitution() > 0) {
+        T2.translation.x += speed2.x;
+        T2.translation.y += speed2.y;
+        T2.translation.z += speed2.z;
         node2->setTransform(T2);
     }
 }
