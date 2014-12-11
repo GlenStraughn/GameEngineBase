@@ -7,3 +7,9 @@
 //
 
 #include "Particle.h"
+
+Particle::Particle()
+{
+    pos, speed, scale = glm::vec3(0,0,0);
+    size, angle, weight, life, cameradistance = 0.0f;
+}

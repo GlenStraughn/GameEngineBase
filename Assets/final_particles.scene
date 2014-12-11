@@ -30,7 +30,7 @@ camera
 
 node
 {
-    name scriptNode
+    name "scriptNode"
 
     script
     {

@@ -19,14 +19,7 @@ void ParticleHandler::addSceneMesh(sceneMesh newMesh){
 int ParticleHandler::FindUnusedParticle(){
     
     for(int i = LastUsedParticle; i < MaxParticles; i++){
-        if (ParticlesContainer[i].life < 0){
-            LastUsedParticle = i;
-            return i;
-        }
-    }
-    
-    for(int i=0; i<LastUsedParticle; i++){
-        if (ParticlesContainer[i].life < 0){
+        if (ParticlesContainer[i].life <= 0){
             LastUsedParticle = i;
             return i;
         }
@@ -51,7 +44,9 @@ void ParticleHandler::sendToOpenGL() {
         GLuint vertexShader = loadShader(ParticlesContainer[i].sMesh.vertexShader, GL_VERTEX_SHADER);
         GLuint fragmentShader = loadShader(ParticlesContainer[i].sMesh.fragmentShader, GL_FRAGMENT_SHADER);
         //TriMeshInstance *meshInstance = new TriMeshInstance();
-        node.addTriMeshInstance(*ParticlesContainer[i].meshInstance);
+        node->addChild(&ParticlesContainer[i].node);
+        
+        ParticlesContainer[i].node.addTriMeshInstance(*ParticlesContainer[i].meshInstance);
         for (const auto& kv : ParticlesContainer[i].sMesh.textures) {
             string texAttributeName = kv.first;
             string texFileName = kv.second;
@@ -77,8 +72,8 @@ void ParticleHandler::sendToOpenGL() {
         ParticlesContainer[i].meshInstance->setMesh(mesh);
         
         //Null is okay for now
-        //ParticlesContainer[i].meshInstance->T.translation = ParticlesContainer[i].pos;
-        //ParticlesContainer[i].meshInstance->T.scale = ParticlesContainer[i].scale;
+        ParticlesContainer[i].meshInstance->T.translation = ParticlesContainer[i].pos;
+        ParticlesContainer[i].meshInstance->T.scale = glm::vec3(0,0,0);
         
         string typeTag = ParticlesContainer[i].sMesh.type;
         if(typeTag == "mesh")
@@ -111,15 +106,15 @@ void ParticleHandler::SimulationScript() {
 //    int calculation = (int)(0.016f*1000.0);
 //    if (newparticles > (int)(0.016f*1000.0))
 //        newparticles = (int)(0.016f*1000.0);
-    int newparticles = 5;
+    int newparticles = 20;
     
     for(int i=0; i<newparticles; i++){
         int particleIndex = FindUnusedParticle();
         ParticlesContainer[particleIndex].life = 5.0f; // This particle will live 5 seconds.
-        ParticlesContainer[particleIndex].pos = glm::vec3(0,0,-20.0f);
+        ParticlesContainer[particleIndex].pos = glm::vec3(0,0,-0.5f);
         
-        float spread = 1.5f;
-        glm::vec3 maindir = glm::vec3(0.0f, 10.0f, 0.0f);
+        float spread = 15.0f;
+        glm::vec3 maindir = glm::vec3(1.0f, 10.0f, -0.5f);
         // Very bad way to generate a random direction;
         // See for instance http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution instead,
         // combined with some user-controlled parameters (main direction, spread, etc)
@@ -138,8 +133,9 @@ void ParticleHandler::SimulationScript() {
         ParticlesContainer[particleIndex].b = rand() % 256;
         ParticlesContainer[particleIndex].a = (rand() % 256) / 3;
         
-        float size = (rand()%1000)/2000.0f + 0.1f;
+        float size = ((rand()%1000)/2000.0f + 0.1f);
         ParticlesContainer[particleIndex].meshInstance->setTranslation(ParticlesContainer[particleIndex].pos);
+        ParticlesContainer[particleIndex].node.setTranslation(ParticlesContainer[particleIndex].pos);
         ParticlesContainer[particleIndex].meshInstance->setScale(glm::vec3(size, size, size));
         
     }
@@ -158,9 +154,11 @@ void ParticleHandler::SimulationScript() {
             if (p.life > 0.0f){
                 
                 // Simulate simple physics : gravity only, no collisions
-                p.speed += glm::vec3(0.0f,-9.81f, 0.0f) * (float)delta * 0.5f;
+                //p.speed += glm::vec3(0.0f,-9.81f, 0.0f) * (float)delta * 0.5f;
+                p.speed += (float)delta * 0.05f;
                 p.pos += p.speed * (float)delta;
                 ParticlesContainer[i].meshInstance->setTranslation(p.pos);
+                ParticlesContainer[i].node.setTranslation(p.pos);
                 p.cameradistance = glm::length2( p.pos - CameraPosition );
             }
             else{

@@ -30,6 +30,7 @@ public:
 class Particle
 {
 public:
+    Particle();
     glm::vec3 pos, speed;
     unsigned char r,g,b,a; // Color
     glm::vec3 scale;
@@ -38,6 +39,7 @@ public:
     float cameradistance; // *Squared* distance to the camera. if dead : -1.0f
     sceneMesh sMesh;
     TriMeshInstance *meshInstance = new TriMeshInstance;
+    SceneNode node;
     
     
     bool operator<(const Particle& that) const {
@@ -46,5 +48,6 @@ public:
     }
     
 private:
+    
    // ParticleHandler* particleHandler;
 };

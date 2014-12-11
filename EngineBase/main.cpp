@@ -332,9 +332,11 @@ void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node, Script *script)
     //while (getToken(F, token, ONE_TOKENS)) {
         
     //}
+    
+    
     ParticleHandler *newParticleHandler = new ParticleHandler;
     newParticleHandler->scene = scene;
-    newParticleHandler->node = node;
+    newParticleHandler->node = &node;
     
     
     sceneMesh newMI1;
@@ -360,7 +362,7 @@ void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node, Script *script)
     
     newParticleHandler->sendToOpenGL();
     
-    newParticleHandler->SimulationScript();
+    //newParticleHandler->SimulationScript();
     
     script->setPointer("particleHandler", newParticleHandler);
     
@@ -550,7 +552,7 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
     newNode->setParent(node);
     
     while (getToken(F, token, ONE_TOKENS)) {
-		//cout << token << endl;
+		cout << "Token: "<< token << endl;
         if (token == "}") break;
         else if (token == "name" || token == "id" || token == "ID")
         {

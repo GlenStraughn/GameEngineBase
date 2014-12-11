@@ -29,11 +29,11 @@ public:
     void addSceneMesh(sceneMesh newMesh);
     void setMeshes();
     void sendToOpenGL();
-    Scene *scene = new Scene;
-    SceneNode node;
+    Scene *scene;
+    SceneNode *node;
     
 private:
-    static const int MaxParticles = 20;
+    static const int MaxParticles = 500;
     Particle ParticlesContainer[MaxParticles];
     int LastUsedParticle = 0;
     double lastTime = glfwGetTime();
