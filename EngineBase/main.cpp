@@ -707,5 +707,20 @@ void loadPhysicsProperties(FILE* F, Scene* scene, SceneNode &sNode)
             getFloats(F, array, 3);
             sNode.setBody(array);
         }
+        else if(token == "mobile")
+        {
+            string answer;
+            
+            getToken(F, answer, ONE_TOKENS);
+            
+            if(answer == "true" || answer == "yes")
+            {
+                sNode.setMobility(true);
+            }
+            else
+            {
+                sNode.setMobility(false);
+            }
+        }
     }
 }

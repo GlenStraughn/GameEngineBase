@@ -79,11 +79,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         //World
         
         //X
-        if (actualPos.x < -2) {
-            //Collides with bottom layer
-            actualPos.x = -2;
-            speed.x *= -node->getRestitution();
-        }
+//        if (actualPos.x < -2) {
+//            //Collides with bottom layer
+//            actualPos.x = -2;
+//            speed.x *= -node->getRestitution();
+//        }
         
         //Y
 //        if (actualPos.y < -2) {
@@ -93,11 +93,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
 //        }
         
         //Z
-        if (actualPos.z < -2) {
-            //Collides with bottom layer
-            actualPos.z = -2;
-            speed.z *= -node->getRestitution();
-        }
+//        if (actualPos.z < -2) {
+//            //Collides with bottom layer
+//            actualPos.z = -2;
+//            speed.z *= -node->getRestitution();
+//        }
         
         node->setSpeed(speed);
         

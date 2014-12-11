@@ -81,6 +81,9 @@ public:
     
     NodeType getType() {return nodeType;}
     
+    bool isMobile() {return mobile;}
+    void setMobility(bool setting) {mobile = setting;}
+    
 protected:
     vector<SceneNode*> children;
     TriMeshInstance* meshInstance;
@@ -104,4 +107,6 @@ protected:
     bool solid; // Whether or not the object can interact with other entities
     bool gravity;  // True = affected by gravity / false = floats in air
     float restitution;
+    
+    bool mobile;
 };
