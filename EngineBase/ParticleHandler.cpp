@@ -36,7 +36,7 @@ void ParticleHandler::SortParticles(){
 void ParticleHandler::setMeshes() {
     //NEEDS TO BE RANDOM EVENTUALLY
     for(int i = 0; i < MaxParticles; ++i)
-        ParticlesContainer[i].sMesh = sceneMeshes[1];
+        ParticlesContainer[i].sMesh = sceneMeshes[0];
 }
 
 void ParticleHandler::sendToOpenGL() {
@@ -45,6 +45,7 @@ void ParticleHandler::sendToOpenGL() {
         GLuint fragmentShader = loadShader(ParticlesContainer[i].sMesh.fragmentShader, GL_FRAGMENT_SHADER);
         //TriMeshInstance *meshInstance = new TriMeshInstance();
         node->addChild(&ParticlesContainer[i].node);
+        ParticlesContainer[i].node.setParent(*node);
         
         ParticlesContainer[i].node.addTriMeshInstance(*ParticlesContainer[i].meshInstance);
         for (const auto& kv : ParticlesContainer[i].sMesh.textures) {
@@ -106,15 +107,18 @@ void ParticleHandler::SimulationScript() {
 //    int calculation = (int)(0.016f*1000.0);
 //    if (newparticles > (int)(0.016f*1000.0))
 //        newparticles = (int)(0.016f*1000.0);
-    int newparticles = 20;
+    int newparticles = 100;
     
     for(int i=0; i<newparticles; i++){
         int particleIndex = FindUnusedParticle();
-        ParticlesContainer[particleIndex].life = 5.0f; // This particle will live 5 seconds.
-        ParticlesContainer[particleIndex].pos = glm::vec3(0,0,-0.5f);
+        SceneNode *parentNode = ParticlesContainer[particleIndex].node.getParent();
+        ParticlesContainer[particleIndex].life = 0.5f; // This particle will live 5 seconds.
+        //ParticlesContainer[particleIndex].pos = glm::vec3(0,0,-2.0f);
+        Transform *parentTransform = parentNode->getTransform();
+        ParticlesContainer[particleIndex].pos = parentTransform->translation;
         
-        float spread = 15.0f;
-        glm::vec3 maindir = glm::vec3(1.0f, 10.0f, -0.5f);
+        float spread = 2.0f;
+        glm::vec3 maindir = glm::vec3(1.0f, 0.0f, 0.0f);
         // Very bad way to generate a random direction;
         // See for instance http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution instead,
         // combined with some user-controlled parameters (main direction, spread, etc)
@@ -136,7 +140,8 @@ void ParticleHandler::SimulationScript() {
         float size = ((rand()%1000)/2000.0f + 0.1f);
         ParticlesContainer[particleIndex].meshInstance->setTranslation(ParticlesContainer[particleIndex].pos);
         ParticlesContainer[particleIndex].node.setTranslation(ParticlesContainer[particleIndex].pos);
-        ParticlesContainer[particleIndex].meshInstance->setScale(glm::vec3(size, size, size));
+        //ParticlesContainer[particleIndex].meshInstance->setScale(glm::vec3(size, size, size));
+        ParticlesContainer[particleIndex].node.setScale(glm::vec3(size, size, size));
         
     }
     
@@ -164,6 +169,7 @@ void ParticleHandler::SimulationScript() {
             else{
                 // Particles that just died will be put at the end of the buffer in SortParticles();
                 p.cameradistance = -1.0f;
+                ParticlesContainer[i].node.setScale(glm::vec3(0,0,0));
             }
             
             ParticlesCount++;

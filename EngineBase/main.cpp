@@ -325,13 +325,9 @@ void loadLight(FILE *F, Scene *scene)
 	}
 }
 
+
 void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node, Script *script)
 {
-    //string token;
-    
-    //while (getToken(F, token, ONE_TOKENS)) {
-        
-    //}
     
     
     ParticleHandler *newParticleHandler = new ParticleHandler;
@@ -339,113 +335,168 @@ void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node, Script *script)
     newParticleHandler->node = &node;
     
     
-    sceneMesh newMI1;
-    newMI1.mesh = "square.ply";
-    newMI1.vertexShader = "basicVertexShader.vs";
-    newMI1.fragmentShader = "spriteShading.fs";
-    newMI1.textures["uDiffuseTex"] = "link.png";
-    newMI1.textures["uOtherText"] = "link.png";
-    newMI1.type = "sprite";
     
-    sceneMesh newMI2;
-    newMI2.mesh = "cubeCenter.ply";
-    newMI2.vertexShader = "basicVertexShader.vs";
-    newMI2.fragmentShader = "phongShading.fs";
-    newMI2.textures["uDiffuseTex"] = "hex.png";
-    newMI2.textures["uOtherTex"] = "hex.png";
-    newMI2.type = "mesh";
+//    sceneMesh newMI1;
+//    newMI1.mesh = "square.ply";
+//    newMI1.vertexShader = "basicVertexShader.vs";
+//    newMI1.fragmentShader = "spriteShading.fs";
+//    newMI1.textures["uDiffuseTex"] = "link.png";
+//    newMI1.textures["uOtherText"] = "link.png";
+//    newMI1.type = "sprite";
+//    
+//    sceneMesh newMI2;
+//    newMI2.mesh = "cubeCenter.ply";
+//    newMI2.vertexShader = "basicVertexShader.vs";
+//    newMI2.fragmentShader = "phongShading.fs";
+//    newMI2.textures["uDiffuseTex"] = "hex.png";
+//    newMI2.textures["uOtherTex"] = "hex.png";
+//    newMI2.type = "mesh";
+//    
+//    newParticleHandler->addSceneMesh(newMI1);
+//    newParticleHandler->addSceneMesh(newMI2);
     
-    newParticleHandler->addSceneMesh(newMI1);
-    newParticleHandler->addSceneMesh(newMI2);
     
+    
+    
+    
+    //script->setPointer("particleHandler", newParticleHandler);
+    
+    string token;
+    while (getToken(F, token, ONE_TOKENS)) {
+        if (token == "}") {
+            break;
+        }
+        else if (token == "meshInstance") {
+            sceneMesh newSceneMesh;
+            
+            while (getToken(F, token, ONE_TOKENS)) {
+                if (token == "}") {
+                    newParticleHandler->addSceneMesh(newSceneMesh);
+                    break;
+                }
+                else if (token == "vertexShader") {
+                    string vsFileName;
+                    getToken(F, vsFileName, ONE_TOKENS);
+                    newSceneMesh.vertexShader = vsFileName;
+                }
+                else if (token == "fragmentShader") {
+                    string fsFileName;
+                    getToken(F, fsFileName, ONE_TOKENS);
+                    newSceneMesh.fragmentShader = fsFileName;
+                }
+                else if (token == "texture") {
+                    string texAttributeName;
+                    getToken(F, texAttributeName, ONE_TOKENS);
+                    string texFileName;
+                    getToken(F, texFileName, ONE_TOKENS);
+                    newSceneMesh.textures[texAttributeName] = texFileName;
+                }
+                else if (token == "mesh") {
+                    string meshName;
+                    getToken(F, meshName, ONE_TOKENS);
+                    newSceneMesh.mesh = meshName;
+                }
+                else if (token == "type")
+                {
+                    string typeTag;
+                    getToken(F, typeTag, ONE_TOKENS);
+                    newSceneMesh.type = typeTag;
+                }
+            }
+        }
+        else if(token == "script")
+        {
+            Script* newScript = NULL;
+            while (getToken(F, token, ONE_TOKENS)) {
+                if (token == "}")
+                {
+                    break;
+                }
+                else if(token == "name" || token == "type" || token == "scriptType")
+                {
+                    string scriptName;
+                    getToken(F, scriptName, ONE_TOKENS);
+                    
+                    newScript = generateScript(scriptName);
+                    node.addScript(*newScript);
+                }
+                else if(token == "float")
+                {
+                    string variableName;
+                    float newFloat;
+                    
+                    getToken(F, variableName, ONE_TOKENS);
+                    getFloats(F, &newFloat, 1);
+                    
+                    if(newScript != NULL)
+                    {
+                        newScript->setFloatValue(variableName, newFloat);
+                    }
+                }
+                else if(token == "floatArray")
+                {
+                    string variableName;
+                    float* newArray;
+                    float size;
+                    
+                    getToken(F, variableName, ONE_TOKENS);
+                    getFloats(F, &size, 1);
+                    
+                    newArray = new float[int(size)];
+                    getFloats(F, newArray, int(size));
+                    
+                    if(newScript != NULL)
+                    {
+                        newScript->setFloatArray(variableName, newArray);
+                    }
+                }
+                else if(token == "string")
+                {
+                    string variableName, newString;
+                    
+                    getToken(F, variableName, ONE_TOKENS);
+                    getToken(F, newString, ONE_TOKENS);
+                    
+                    if(newScript != NULL)
+                    {
+                        newScript->setStringValue(variableName, newString);
+                    }
+                }
+                else if(token == "stringArray")
+                {
+                    string variableName, *newArray;
+                    float size;
+                    
+                    getToken(F, variableName, ONE_TOKENS);
+                    getFloats(F, &size, 1);
+                    
+                    newArray = new string[int(size)];
+                    
+                    for(int i = 0; i < size; i++)
+                    {
+                        getToken(F, newArray[i], ONE_TOKENS);
+                    }
+                    
+                    
+                    if(newScript != NULL)
+                    {
+                        newScript->setStringArray(variableName, newArray);
+                    }
+                }
+                else if(token == "particleHandler")
+                {
+                    loadParticleHandler(F, scene, node, newScript);
+                }
+            }
+            loadSpecialCase(F, scene, *newScript);
+            
+        }
+    }
     newParticleHandler->setMeshes();
     
     newParticleHandler->sendToOpenGL();
     
-    //newParticleHandler->SimulationScript();
-    
     script->setPointer("particleHandler", newParticleHandler);
-    
-//    string token;
-//    GLuint vertexShader = NULL_HANDLE;
-//    GLuint fragmentShader = NULL_HANDLE;
-//    GLuint shaderProgram = NULL_HANDLE;
-//    TriMeshInstance *meshInstance = new TriMeshInstance();
-//    node.addTriMeshInstance(*meshInstance);
-//    
-//    while (getToken(F, token, ONE_TOKENS)) {
-//        if (token == "}") {
-//            break;
-//        }
-//        else if (token == "vertexShader") {
-//            string vsFileName;
-//            getToken(F, vsFileName, ONE_TOKENS);
-//            vertexShader = loadShader(vsFileName.c_str(), GL_VERTEX_SHADER);
-//        }
-//        else if (token == "fragmentShader") {
-//            string fsFileName;
-//            getToken(F, fsFileName, ONE_TOKENS);
-//            fragmentShader = loadShader(fsFileName.c_str(), GL_FRAGMENT_SHADER);
-//        }
-//        else if (token == "texture") {
-//            string texAttributeName;
-//            getToken(F, texAttributeName, ONE_TOKENS);
-//            string texFileName;
-//            getToken(F, texFileName, ONE_TOKENS);
-//            RGBAImage *image = scene->getTexture(texFileName);
-//            if (image == NULL) {
-//                image = new RGBAImage();
-//                image->loadPNG(texFileName);
-//                image->sendToOpenGL();
-//                scene->addTexture(image);
-//            }
-//            NameIdVal<RGBAImage*> texref(texAttributeName, -1, image);
-//            meshInstance->mat.textures.push_back(texref);
-//        }
-//        else if (token == "mesh") {
-//            string meshName;
-//            getToken(F, meshName, ONE_TOKENS);
-//            TriMesh *mesh = scene->getMesh(meshName);
-//            if (mesh == NULL) {
-//                mesh = new TriMesh();
-//                mesh->readFromPly(meshName);
-//                mesh->sendToOpenGL();
-//                scene->addMesh(mesh);
-//            }
-//            meshInstance->setMesh(mesh);
-//        }
-//        else if (token == "translate") {
-//            glm::vec3 t;
-//            getFloats(F, &t[0], 3);
-//            meshInstance->T.translation += t;
-//        }
-//        else if (token == "scale") {
-//            glm::vec3 s;
-//            getFloats(F, &s[0], 3);
-//            meshInstance->T.scale *= s;
-//        }
-//        else if (token == "type")
-//        {
-//            string typeTag;
-//            getToken(F, typeTag, ONE_TOKENS);
-//            
-//            if(typeTag == "mesh")
-//            {
-//                meshInstance->meshType = TriMeshInstance::MeshDrawType::MESH;
-//            }
-//            else if(typeTag == "billboard")
-//            {
-//                meshInstance->meshType = TriMeshInstance::MeshDrawType::BILLBOARD;
-//            }
-//            else if(typeTag == "sprite" || typeTag == "pointSprite")
-//            {
-//                meshInstance->meshType = TriMeshInstance::MeshDrawType::POINT_SPRITE;
-//            }
-//        }
-//    }
-//    
-//    shaderProgram = createShaderProgram(vertexShader, fragmentShader);
-//    meshInstance->mat.shaderProgram = shaderProgram;
 }
 
 
