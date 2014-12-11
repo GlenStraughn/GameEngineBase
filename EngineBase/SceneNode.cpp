@@ -18,6 +18,7 @@ SceneNode::SceneNode()
     
     nodeType = NORMAL;
     
+    meshInstance = NULL;
     parent = NULL;
 }
 

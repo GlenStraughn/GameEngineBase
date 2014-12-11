@@ -118,14 +118,13 @@ void PhysicsEngine::bounceNodes(SceneNode *node1, SceneNode *node2)
         {
             glm::vec3 speed1 = node1->getSpeed();
             glm::vec3 speed2 = node2->getSpeed();
-                    
-                    
+            
             speed1.x *= node1->getRestitution() * -1;
-            speed2.x -= speed1.x * (1 - node1->getRestitution());
-                    
             node1->setSpeed(speed1);
+                
+            speed2.x -= speed1.x * (1 - node1->getRestitution());
             node2->setSpeed(speed2);
-                    
+            
             T1.translation.x = T2.translation.x + node1->getBody(0);
             node1->setTransform(T1);
         }
