@@ -16,10 +16,9 @@
 
 using namespace std;
 
-class mInstance
+class sceneMesh
 {
 public:
-    //string name;
     string mesh;
     string vertexShader;
     string fragmentShader;
@@ -36,7 +35,9 @@ public:
     float size, angle, weight;
     float life; // Remaining life of the particle. if <0 : dead and unused.
     float cameradistance; // *Squared* distance to the camera. if dead : -1.0f
-    mInstance meshI;
+    sceneMesh sMesh;
+    TriMeshInstance *meshInstance = new TriMeshInstance;
+    
     
     bool operator<(const Particle& that) const {
         // Sort in reverse order : far particles drawn first.

@@ -330,22 +330,33 @@ void loadParticleHandler(FILE* F, Scene* scene, SceneNode &node)
     //while (getToken(F, token, ONE_TOKENS)) {
         
     //}
-    ParticleHandler *newParticleHandler;
-    mInstance *newMI1;
-    newMI1->mesh = "square.ply";
-    newMI1->vertexShader = "basicVertexShader.vs";
-    newMI1->fragmentShader = "spriteShading.fs";
-    newMI1->textures["uDiffuseTex"] = "link.png";
-    newMI1->textures["uOtherText"] = "link.png";
-    newMI1->type = "sprite";
+    ParticleHandler *newParticleHandler = new ParticleHandler;
+    newParticleHandler->scene = scene;
+    newParticleHandler->node = node;
     
-    mInstance *newMI2;
-    newMI2->mesh = "cubePlanet1";
-    newMI2->vertexShader = "basicVertexShader.vs";
-    newMI2->fragmentShader = "phongShading.fs";
-    newMI2->textures["uDiffuseTex"] = "hex.png";
-    newMI2->textures["uOtherTex"] = "hex.png";
-    newMI2->type = "mesh";
+    
+    sceneMesh newMI1;
+    newMI1.mesh = "square.ply";
+    newMI1.vertexShader = "basicVertexShader.vs";
+    newMI1.fragmentShader = "spriteShading.fs";
+    newMI1.textures["uDiffuseTex"] = "link.png";
+    newMI1.textures["uOtherText"] = "link.png";
+    newMI1.type = "sprite";
+    
+    sceneMesh newMI2;
+    newMI2.mesh = "cubeCenter.ply";
+    newMI2.vertexShader = "basicVertexShader.vs";
+    newMI2.fragmentShader = "phongShading.fs";
+    newMI2.textures["uDiffuseTex"] = "hex.png";
+    newMI2.textures["uOtherTex"] = "hex.png";
+    newMI2.type = "mesh";
+    
+    newParticleHandler->addSceneMesh(newMI1);
+    newParticleHandler->addSceneMesh(newMI2);
+    
+    newParticleHandler->setMeshes();
+    
+    newParticleHandler->sendToOpenGL();
     
     newParticleHandler->SimulationScript();
     
@@ -566,7 +577,7 @@ void loadSceneNode(FILE* F, Scene* scene, SceneNode &node)
             {
                 loadScript(F, scene, *newNode);
             }
-            else if(token == "particleHanlder") {
+            else if(token == "particleHandler") {
                 loadParticleHandler(F, scene, *newNode);
             }
         }

@@ -18,26 +18,24 @@
 #include "Particle.h"
 #include "Scene.h"
 
+
+
 class ParticleHandler
 {
 public:
     int FindUnusedParticle();
     void SortParticles();
     void SimulationScript();
-    void addMeshInstance(mInstance mesh);
+    void addSceneMesh(sceneMesh newMesh);
     void setMeshes();
     void sendToOpenGL();
+    Scene *scene = new Scene;
+    SceneNode node;
     
 private:
-    static const int MaxParticles = 500;
-    
+    static const int MaxParticles = 20;
     Particle ParticlesContainer[MaxParticles];
-    
     int LastUsedParticle = 0;
-    
-    vector<string> spriteNames;
-    vector<string> meshNames;
     double lastTime = glfwGetTime();
-    
-    vector<mInstance> mInstances;
+    vector<sceneMesh> sceneMeshes;
 };

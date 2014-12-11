@@ -11,8 +11,8 @@
 extern Scene gScene;
 //const Scene currentScene = gScene;
 
-void ParticleHandler::addMeshInstance(mInstance newMesh){
-    mInstances.push_back(newMesh);
+void ParticleHandler::addSceneMesh(sceneMesh newMesh){
+    sceneMeshes.push_back(newMesh);
 }
 
 int ParticleHandler::FindUnusedParticle(){
@@ -38,19 +38,63 @@ void ParticleHandler::SortParticles(){
     std::sort(&ParticlesContainer[0], &ParticlesContainer[MaxParticles]);
 }
 
+
 void ParticleHandler::setMeshes() {
+    //NEEDS TO BE RANDOM EVENTUALLY
     for(int i = 0; i < MaxParticles; ++i)
-        ParticlesContainer[i].meshI = mInstances[0];
+        ParticlesContainer[i].sMesh = sceneMeshes[1];
 }
 
 void ParticleHandler::sendToOpenGL() {
     for(int i = 0; i < MaxParticles; ++i) {
-        GLuint vertexShader = loadShader(ParticlesContainer[i].meshI.vertexShader, GL_VERTEX_SHADER);
-        GLuint fragmentShader = loadShader(ParticlesContainer[i].meshI.fragmentShader, GL_FRAGMENT_SHADER);
-        for (const auto& kv : ParticlesContainer[i].meshI.textures) {
-            
-            std::cout << kv.first << " has value " << kv.second << std::endl;
+        GLuint vertexShader = loadShader(ParticlesContainer[i].sMesh.vertexShader, GL_VERTEX_SHADER);
+        GLuint fragmentShader = loadShader(ParticlesContainer[i].sMesh.fragmentShader, GL_FRAGMENT_SHADER);
+        //TriMeshInstance *meshInstance = new TriMeshInstance();
+        node.addTriMeshInstance(*ParticlesContainer[i].meshInstance);
+        for (const auto& kv : ParticlesContainer[i].sMesh.textures) {
+            string texAttributeName = kv.first;
+            string texFileName = kv.second;
+            RGBAImage *image = scene->getTexture(texFileName);
+            //std::cout << kv.first << " has value " << kv.second << std::endl;
+            if (image == NULL) {
+                image = new RGBAImage();
+                image->loadPNG(texFileName);
+                image->sendToOpenGL();
+                scene->addTexture(image);
+            }
+            NameIdVal<RGBAImage*> texref(texAttributeName, -1, image);
+            ParticlesContainer[i].meshInstance->mat.textures.push_back(texref);
         }
+        string meshName = ParticlesContainer[i].sMesh.mesh;
+        TriMesh *mesh = scene->getMesh(ParticlesContainer[i].sMesh.mesh);
+        if (mesh == NULL) {
+            mesh = new TriMesh();
+            mesh->readFromPly(ParticlesContainer[i].sMesh.mesh);
+            mesh->sendToOpenGL();
+            scene->addMesh(mesh);
+        }
+        ParticlesContainer[i].meshInstance->setMesh(mesh);
+        
+        //Null is okay for now
+        //ParticlesContainer[i].meshInstance->T.translation = ParticlesContainer[i].pos;
+        //ParticlesContainer[i].meshInstance->T.scale = ParticlesContainer[i].scale;
+        
+        string typeTag = ParticlesContainer[i].sMesh.type;
+        if(typeTag == "mesh")
+        {
+            ParticlesContainer[i].meshInstance->meshType = TriMeshInstance::MeshDrawType::MESH;
+        }
+        else if(typeTag == "billboard")
+        {
+            ParticlesContainer[i].meshInstance->meshType = TriMeshInstance::MeshDrawType::BILLBOARD;
+        }
+        else if(typeTag == "sprite" || typeTag == "pointSprite")
+        {
+            ParticlesContainer[i].meshInstance->meshType = TriMeshInstance::MeshDrawType::POINT_SPRITE;
+        }
+        
+        GLuint shaderProgram = createShaderProgram(vertexShader, fragmentShader);
+        ParticlesContainer[i].meshInstance->mat.shaderProgram = shaderProgram;
     }
 }
 
@@ -62,9 +106,11 @@ void ParticleHandler::SimulationScript() {
     
     glm::vec3 CameraPosition = gScene.cameras[gScene.Scene::currentCamera]->center;
     
-    int newparticles = (int)(delta*10.0);
-    if (newparticles > (int)(0.016f*10.0))
-        newparticles = (int)(0.016f*10.0);
+//    int newparticles = (int)(delta*1000.0);
+//    int calculation = (int)(0.016f*1000.0);
+//    if (newparticles > (int)(0.016f*1000.0))
+//        newparticles = (int)(0.016f*1000.0);
+    int newparticles = 5;
     
     for(int i=0; i<newparticles; i++){
         int particleIndex = FindUnusedParticle();
@@ -92,8 +138,8 @@ void ParticleHandler::SimulationScript() {
         ParticlesContainer[particleIndex].a = (rand() % 256) / 3;
         
         float size = (rand()%1000)/2000.0f + 0.1f;
-        
-        ParticlesContainer[particleIndex].scale = glm::vec3(size, size, size);
+        ParticlesContainer[particleIndex].meshInstance->setTranslation(ParticlesContainer[particleIndex].pos);
+        ParticlesContainer[particleIndex].meshInstance->setScale(glm::vec3(size, size, size));
         
     }
     
@@ -113,8 +159,8 @@ void ParticleHandler::SimulationScript() {
                 // Simulate simple physics : gravity only, no collisions
                 p.speed += glm::vec3(0.0f,-9.81f, 0.0f) * (float)delta * 0.5f;
                 p.pos += p.speed * (float)delta;
+                ParticlesContainer[i].meshInstance->setTranslation(p.pos);
                 p.cameradistance = glm::length2( p.pos - CameraPosition );
-                ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta;
             }
             else{
                 // Particles that just died will be put at the end of the buffer in SortParticles();
