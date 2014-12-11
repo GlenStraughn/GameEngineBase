@@ -56,10 +56,10 @@ node
 
     physicsProperties
     {
-        gravity "yes"
+        gravity "no"
         solid "yes"
         body [0.85 0.85 0.85]
-        velocity [0 0 0]
+        velocity [-0.025 -0.025 -0.025]
         restitution 1
     }
 
@@ -72,171 +72,49 @@ node
     script
     {
         type "physicsScript"
-        floatArray gravity 3 [0 -0.001 0]
+        floatArray gravity 3 [0 -.001 0]
     }
 }
 
 node
 {
-    name "sun"
-    meshInstance
-    {
-        name "sun1"
-        mesh "sphereCenter.ply"
-        scale [1 1 1]
-        translate [0, 0, 0]
-        vertexShader "basicVertexShader.vs"
-        fragmentShader "Shining.fs"
-        texture uDiffuseTex "sun.png"
-        texture uOtherTex "asteroids.png"
-        type mesh
-    }
-    translate [0, 0, 0]
-    scale [0.5 0.5 0.5]
+name "sun"
+meshInstance
+{
+name "sun2"
+mesh "sphereCenter.ply"
+scale [1 1 1]
+translate [0, 0, 0]
+vertexShader "basicVertexShader.vs"
+fragmentShader "Shining.fs"
+texture uDiffuseTex "sun.png"
+texture uOtherTex "asteroids.png"
+type mesh
+}
+translate [0, 0, 0]
+scale [0.5 0.5 0.5]
 
-    physicsProperties
-    {
-        gravity "yes"
-        solid "yes"
-        body [0.85 0.85 0.85]
-        velocity [0 0 0]
-        restitution 1
-    }
-
-
-    script
-    {
-        type "controllerScript"
-    }
-
-    script
-    {
-        type "physicsScript"
-        floatArray gravity 3 [-0.0001 -0.0001 0]
-    }
-
-    node
-    {
-        name "cubePlanet"
-        meshInstance
-        {
-            name "cubePlanet1"
-            mesh "cubeCenter.ply"
-            scale [1 1 1]
-            translate [0, 0, 0]
-            vertexShader "basicVertexShader.vs"
-            fragmentShader "phongShading.fs"
-            texture uDiffuseTex "hex.png"
-            texture uOtherTex "hex.png"
-            type mesh
-        }
-        translate [2, 0, 0]
-        scale [0.25 0.25 0.25]
-
-
-        node
-        {
-            name "cubeMoon"
-            meshInstance
-            {
-                name "asteroids1"
-                mesh "square.ply"
-                scale [1 1 1]
-                translate [0, 0, 0]
-                vertexShader "basicVertexShader.vs"
-                fragmentShader "spriteShading.fs"
-                texture uDiffuseTex "asteroids.png"
-                texture uOtherTex "asteroids.png"
-                type sprite
-            }
-            translate [4, 0, 0]
-            scale [0.25 0.25 0.25]
-
-
-        }
-    }
-    
-    node
-    {   
-        name "cylinderPlanet"
-        meshInstance
-        {
-            name "cylinderPlanet1"
-            mesh "cylinderCenter.ply"
-            scale [1 1 1]
-            translate [0, 0, 0]
-            vertexShader "basicVertexShader.vs"
-            fragmentShader "phongShading.fs"
-            texture uDiffuseTex "specular.png"
-            texture uOtherTex "hex.png"
-            type mesh
-        }
-        translate [2, 0, 0]
-        scale [0.3 0.25 0.3]
-    }
-    
-
-    node
-    {
-        name "sphericalPlanet"
-        meshInstance
-        {
-            name "spherePlanet1"
-            mesh "sphereCenter.ply"
-            scale [1 1 1]
-            translate [0, 0, 0]
-            vertexShader "basicVertexShader.vs"
-            fragmentShader "phongShading.fs"
-            texture uDiffuseTex "specular.png"
-            texture uOtherTex "hex.png"
-            type mesh
-        }
-
-        translate [2, 0, 0]
-        scale [0.15 0.15 0.15]
-
-        node
-        {
-            name "sphereMoon1"
-            meshInstance
-            {
-                name "asteroids1"
-                mesh "square.ply"
-                scale [1 1 1]
-                translate [0, 0, 0]
-                vertexShader "basicVertexShader.vs"
-                fragmentShader "spriteShading.fs"
-                texture uDiffuseTex "asteroids.png"
-                texture uOtherTex "asteroids.png"
-                type sprite
-            }
-            translate [4, 0, 0]
-            scale [0.5 0.5 0.5]
-
-        }
-        
-        node
-        {
-            name "sphereMoon2"
-            meshInstance
-            {
-                name "asteroids1"
-                mesh "square.ply"
-                scale [1 1 1]
-                translate [0, 0, 0]
-                vertexShader "basicVertexShader.vs"
-                fragmentShader "spriteShading.fs"
-                texture uDiffuseTex "asteroids.png"
-                texture uOtherTex "asteroids.png"
-                type sprite
-            }
-            translate [4, 0, 0]
-            scale [0.5 0.5 0.5]
-        }
-    }
+physicsProperties
+{
+gravity "no"
+solid "yes"
+body [0.85 0.85 0.85]
+velocity [0.015 0.025 0.03]
+restitution 1
 }
 
 
+script
+{
+type "controllerScript"
+}
+
+script
+{
+type "physicsScript"
+floatArray gravity 3 [0 -.001 0]
+}
+}
 
 light
 {

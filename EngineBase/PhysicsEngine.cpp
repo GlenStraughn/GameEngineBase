@@ -68,7 +68,9 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         Transform T1 = node->getCopyTransform();
         glm::vec3 actualPos = T1.translation;
         actualPos.x += speed.x;
+        cout << actualPos.y;
         actualPos.y += speed.y;
+        cout << actualPos.y;
         actualPos.z += speed.z;
         
         //Check new position for posible collision with Wall
@@ -82,6 +84,12 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
             speed.x *= -node->getRestitution();
         }
         
+        if (actualPos.x >= 2) {
+            //Collides with bottom layer
+            actualPos.x = 2;
+            speed.x *= -node->getRestitution();
+        }
+        
         //Y
         if (actualPos.y < -2) {
             //Collides with bottom layer
@@ -90,18 +98,25 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         }
         
         //Y
-//        if (actualPos.y >= 2) {
-//            //Collides with bottom layer
-//            actualPos.y = 2;
-//            speed.y *= -node->getRestitution();
-//        }
+        if (actualPos.y >= 2) {
+            //Collides with bottom layer
+            actualPos.y = 2;
+            speed.y *= -node->getRestitution();
+        }
         
         //Z
-//        if (actualPos.z < -2) {
-//            //Collides with bottom layer
-//            actualPos.z = -2;
-//            speed.z *= -node->getRestitution();
-//        }
+        if (actualPos.z < -2) {
+            //Collides with bottom layer
+            actualPos.z = -2;
+            speed.z *= -node->getRestitution();
+        }
+        
+        if (actualPos.z >= 2) {
+            //Collides with bottom layer
+            actualPos.z = 2;
+            speed.z *= -node->getRestitution();
+        }
+        
         
         node->setSpeed(speed);
         
