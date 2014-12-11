@@ -11,6 +11,10 @@
 #include "SceneNode.h"
 
 bool PhysicsEngine::checkCollision(SceneNode *node1, SceneNode *node2) {
+    if (!node1->isSolid() || !node2->isSolid()) {
+        return false;
+    }
+    
     Transform T1 = node1->getCopyTransform();
     Transform T2 = node2->getCopyTransform();
     
@@ -19,9 +23,9 @@ bool PhysicsEngine::checkCollision(SceneNode *node1, SceneNode *node2) {
     glm::vec3 actualPos2 = T2.translation;
     
     //                    Get width, height and depth of each object
-    if (actualPos.x + node1->getBody(0) >= actualPos2.x && actualPos.x < actualPos2.x+node2->getBody(0)) {
-        if (actualPos.y + node1->getBody(1) >= actualPos2.y && actualPos.y < actualPos2.y+node2->getBody(1)) {
-            if (actualPos.z + node1->getBody(2) >= actualPos2.z && actualPos.z < actualPos2.z+node2->getBody(2)) {
+    if (actualPos.x + node1->getBody(0)/2 > actualPos2.x - node2->getBody(0)/2 && actualPos.x - node1->getBody(0)/2 < actualPos2.x+node2->getBody(0)) {
+        if (actualPos.y + node1->getBody(1)/2 > actualPos2.y - node2->getBody(1)/2 && actualPos.y - node1->getBody(1)/2 < actualPos2.y+node2->getBody(1)) {
+            if (actualPos.z + node1->getBody(2)/2 > actualPos2.z - node2->getBody(2)/2 && actualPos.z - node1->getBody(2)/2 < actualPos2.z+node2->getBody(2)) {
                 return true;
             }
         }
@@ -65,34 +69,35 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         
         Transform T1 = node->getCopyTransform();
         glm::vec3 actualPos = T1.translation;
-        actualPos.x += speed.x;
-        actualPos.y += speed.y;
-        actualPos.z += speed.z;
+        if (node->getRestitution() > 0) {
+            actualPos.x += speed.x;
+            actualPos.y += speed.y;
+            actualPos.z += speed.z;
+        }
         
         //Check new position for posible collision with Wall
-        
         //World
         
         //X
-//        if (actualPos.x < -2) {
-//            //Collides with bottom layer
-//            actualPos.x = -2;
-//            speed.x *= -node->getRestitution();
-//        }
+        //        if (actualPos.x < -2) {
+        //            //Collides with bottom layer
+        //            actualPos.x = -2;
+        //            speed.x *= -node->getRestitution();
+        //        }
         
         //Y
-        if (actualPos.y < -2) {
-            //Collides with bottom layer
-            actualPos.y = -2;
-            speed.y *= -node->getRestitution();
-        }
+        //        if (actualPos.y < -2) {
+        //            //Collides with bottom layer
+        //            actualPos.y = -2;
+        //            speed.y *= -node->getRestitution();
+        //        }
         
         //Z
-//        if (actualPos.z < -2) {
-//            //Collides with bottom layer
-//            actualPos.z = -2;
-//            speed.z *= -node->getRestitution();
-//        }
+        //        if (actualPos.z < -2) {
+        //            //Collides with bottom layer
+        //            actualPos.z = -2;
+        //            speed.z *= -node->getRestitution();
+        //        }
         
         node->setSpeed(speed);
         
@@ -102,35 +107,71 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
     
     
 }
-    
+
 
 
 
 void PhysicsEngine::bounceNodes(SceneNode *node1, SceneNode *node2)
 {
     //Should check performance
-    if (PhysicsEngine::checkCollision(node1, node2))
-    {
-        Transform T1 = node1->getCopyTransform();
-        Transform T2 = node2->getCopyTransform();
-        
-        if (T1.translation.x + node1->getBody(0)/2 > T2.translation.x)
-        {
-            glm::vec3 speed1 = node1->getSpeed();
-            glm::vec3 speed2 = node2->getSpeed();
-                    
-                    
-            speed1.x *= node1->getRestitution() * -1;
-            speed2.x -= speed1.x * (1 - node1->getRestitution());
-                    
-            node1->setSpeed(speed1);
-            node2->setSpeed(speed2);
-                    
-            T1.translation.x = T2.translation.x + node1->getBody(0);
-            node1->setTransform(T1);
-        }
-    }
+    Transform T1 = node1->getCopyTransform();
+    Transform T2 = node2->getCopyTransform();
     
+    glm::vec3 speed1 = node1->getSpeed();
+    glm::vec3 speed2 = node2->getSpeed();
+    
+    
+    //    if (fabs(fabs(T1.translation.x) - fabs(T2.translation.x)) < node1->getBody(0)/2 + node2->getBody(0)/2) {
+    
+    speed1.x *= -node1->getRestitution();
+    speed2.x *= -node2->getRestitution();
+    //    }
+    //
+    //        if (T1.translation.x + node1->getBody(0)/2 > T2.translation.x - node2->getBody(0)/2 && node1->getRestitution() > 0) {
+    //            T1.translation.x = T2.translation.x+node2->getBody(1)/2+node1->getBody(0)/2;
+    //        }
+    //        if (T1.translation.x - node1->getBody(0)/2 < T2.translation.x + node2->getBody(0)/2 && node2->getRestitution() > 0) {
+    //            T2.translation.x = T1.translation.x+node1->getBody(0)/2+node2->getBody(0)/2;
+    //        }
+    //
+    speed1.y *= -node1->getRestitution();
+    speed2.y *= -node2->getRestitution();
+    //
+    //    if (fabs(fabs(T1.translation.y) - fabs(T2.translation.y)) < node1->getBody(1)/2 + node2->getBody(1)/2) {
+    //        if (T1.translation.y + node1->getBody(1)/2 > T2.translation.y - node2->getBody(1)/2 && node1->getRestitution() > 0) {
+    //            T1.translation.y = T2.translation.y+node2->getBody(1)/2+node1->getBody(1)/2;
+    //        }
+    //        if (T1.translation.y - node1->getBody(1)/2 < T2.translation.y + node2->getBody(1)/2 && node2->getRestitution() > 0) {
+    //            T2.translation.y = T1.translation.y+node1->getBody(1)/2+node2->getBody(1)/2;
+    //        }
+    //    }
+    
+    //
+    
+    speed1.z *= -node1->getRestitution();
+    node1->setSpeed(speed1);
+    
+    speed2.z *= -node2->getRestitution();
+    node2->setSpeed(speed2);
+    //
+    //    if (T1.translation.z + node1->getBody(2)/2 > T2.translation.z - node2->getBody(2)/2 && node1->getRestitution() > 0) {
+    //        T1.translation.z = T2.translation.z+node2->getBody(2)/2+node1->getBody(2)/2;
+    //    }
+    //    if (T1.translation.z - node1->getBody(2)/2 < T2.translation.z + node2->getBody(2)/2 && node2->getRestitution() > 0) {
+    //        T2.translation.z = T1.translation.z+node1->getBody(2)/2+node2->getBody(2)/2;
+    //    }
+    if (node1->isMobile()) {
+        T1.translation.x += speed1.x;
+        T1.translation.y += speed1.y;
+        T1.translation.z += speed1.z;
+        node1->setTransform(T1);
+    }
+    if (node2->isMobile()) {
+        T2.translation.x += speed2.x;
+        T2.translation.y += speed2.y;
+        T2.translation.z += speed2.z;
+        node2->setTransform(T2);
+    }
 }
 
 
