@@ -74,11 +74,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         //World
         
         //X
-        if (actualPos.x < -2) {
-            //Collides with bottom layer
-            actualPos.x = -2;
-            speed.x *= -node->getRestitution();
-        }
+//        if (actualPos.x < -2) {
+//            //Collides with bottom layer
+//            actualPos.x = -2;
+//            speed.x *= -node->getRestitution();
+//        }
         
         //Y
         if (actualPos.y < -2) {
@@ -88,11 +88,11 @@ void PhysicsEngine::updateNodes(map<string, SceneNode*> nodeList)
         }
         
         //Z
-        if (actualPos.z < -2) {
-            //Collides with bottom layer
-            actualPos.z = -2;
-            speed.z *= -node->getRestitution();
-        }
+//        if (actualPos.z < -2) {
+//            //Collides with bottom layer
+//            actualPos.z = -2;
+//            speed.z *= -node->getRestitution();
+//        }
         
         node->setSpeed(speed);
         
@@ -118,13 +118,14 @@ void PhysicsEngine::bounceNodes(SceneNode *node1, SceneNode *node2)
         {
             glm::vec3 speed1 = node1->getSpeed();
             glm::vec3 speed2 = node2->getSpeed();
-            
+                    
+                    
             speed1.x *= node1->getRestitution() * -1;
-            node1->setSpeed(speed1);
-                
             speed2.x -= speed1.x * (1 - node1->getRestitution());
+                    
+            node1->setSpeed(speed1);
             node2->setSpeed(speed2);
-            
+                    
             T1.translation.x = T2.translation.x + node1->getBody(0);
             node1->setTransform(T1);
         }
