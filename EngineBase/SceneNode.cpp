@@ -172,7 +172,6 @@ void SceneNode::setBody(float bodyTemp[3]) {
     body[0] = bodyTemp[0];
     body[1] = bodyTemp[1];
     body[2] = bodyTemp[2];
-    solid = true;
 }
 
 

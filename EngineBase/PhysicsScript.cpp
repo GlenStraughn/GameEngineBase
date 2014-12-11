@@ -18,6 +18,8 @@ PhysicsScript::PhysicsScript()
 
 void PhysicsScript::PhysicsScript::run()
 {
+    engine.updateNodes(*nodeMap);
+    
     SceneNode *node1, *node2;
     
     map<string, SceneNode*>::iterator i, j;
@@ -48,7 +50,6 @@ void PhysicsScript::PhysicsScript::run()
         }
     }
     
-    engine.updateNodes(*nodeMap);
 }
 
 
